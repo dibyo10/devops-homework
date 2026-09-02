@@ -51,6 +51,15 @@ sudo deluser --remove-home devopsstudent
 
 The cleanup command is included so a temporary account is not left on the machine.
 
+Observed in a disposable Ubuntu 24.04 container (the container was removed after the test):
+
+```text
+info: Adding user `devopsstudent' ...
+info: Creating home directory `/home/devopsstudent' ...
+uid=1001(devopsstudent) gid=1001(devopsstudent) groups=1001(devopsstudent),100(users)
+devopsstudent:x:1001:1001:,,,:/home/devopsstudent:/bin/bash
+```
+
 ## 3. `journalctl`
 
 `journalctl` reads logs collected by `systemd-journald`. Useful forms are:
@@ -104,4 +113,3 @@ ls -l linux-practice/app.log
 du -sh linux-practice
 rm -r linux-practice
 ```
-

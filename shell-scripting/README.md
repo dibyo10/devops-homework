@@ -34,3 +34,5 @@ test -s system-info-output/running_processes.txt
 head system-info-output/running_processes.txt
 ```
 
+The full isolated test run is recorded in [`observed-output.md`](observed-output.md).
+
