@@ -5,7 +5,7 @@ End-to-end submission for the Linux, shell scripting, networking, Git/GitHub, Do
 ## Student details
 
 - Name: Dibyo Chakraborty
-- Enrollment number: Not provided
+- Enrollment number: 24BCS10302
 
 ## Submission index
 

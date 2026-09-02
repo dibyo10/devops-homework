@@ -3,7 +3,7 @@
 ## Student details
 
 - Name: Dibyo Chakraborty
-- Enrollment number: Not provided
+- Enrollment number: 24BCS10302
 
 ## Build and run
 
@@ -35,4 +35,3 @@ homework-multistage   Up 1 second   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
 ```
 
 ![Multi-stage application on port 8080](../evidence/screenshots/multi-stage-app.png)
-
