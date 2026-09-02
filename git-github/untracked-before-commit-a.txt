@@ -1,0 +1,1 @@
+This new untracked file is intentionally excluded by git commit -a.
