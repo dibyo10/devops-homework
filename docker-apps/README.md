@@ -38,15 +38,15 @@ Observed on 2 September 2026:
 
 All six containers reported `Up` with their expected port mappings.
 
-## Rendered-page evidence
+## Screenshots
 
 | Node.js | Python | Java |
 | --- | --- | --- |
-| ![Node.js Hello World](../evidence/screenshots/docker-apps/nodejs-app.png) | ![Python Hello World](../evidence/screenshots/docker-apps/python-app.png) | ![Java Hello World](../evidence/screenshots/docker-apps/java-app.png) |
+| ![Node.js Hello World](screenshots/nodejs-app.png) | ![Python Hello World](screenshots/python-app.png) | ![Java Hello World](screenshots/java-app.png) |
 
 | Apache | React | Nginx |
 | --- | --- | --- |
-| ![Apache Hello World](../evidence/screenshots/docker-apps/apache-app.png) | ![React Hello World](../evidence/screenshots/docker-apps/react-app.png) | ![Nginx Hello World](../evidence/screenshots/docker-apps/nginx-app.png) |
+| ![Apache Hello World](screenshots/apache-app.png) | ![React Hello World](screenshots/react-app.png) | ![Nginx Hello World](screenshots/nginx-app.png) |
 
 Each application can also be built independently, for example:
 

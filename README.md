@@ -18,7 +18,6 @@ End-to-end submission for the Linux, shell scripting, networking, Git/GitHub, Do
 | Docker Hello World apps | [`docker-apps/README.md`](docker-apps/README.md) |
 | Multi-stage build | [`multi-stage-build/README.md`](multi-stage-build/README.md) |
 | Docker networking and volumes | [`docker-networking/README.md`](docker-networking/README.md) |
-| Screenshots | [`evidence/screenshots`](evidence/screenshots) |
 
 ## Quick validation
 

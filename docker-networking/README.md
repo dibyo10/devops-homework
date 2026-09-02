@@ -45,7 +45,7 @@ Frontend to database: NXDOMAIN
 
 The successful shared-network probes and failed cross-network DNS lookup verify both connectivity and isolation.
 
-![Frontend container running on its Docker network](../evidence/screenshots/docker-networking/container-networking.png)
+![Frontend container running on its Docker network](screenshots/container-networking.png)
 
 The default password in Compose is strictly for this disposable local exercise. Set `MYSQL_ROOT_PASSWORD` in the shell for any less temporary use.
 
@@ -71,7 +71,7 @@ Mode=host Ports={}
 
 The empty `Ports` map verifies that no `-p` mapping was used. The original Docker Desktop setting was restored after this test.
 
-![Apache reached directly on port 80 with host networking](../evidence/screenshots/docker-networking/host-network.png)
+![Apache reached directly on port 80 with host networking](screenshots/host-network.png)
 
 ## 3. Bind mount
 
@@ -104,7 +104,7 @@ Restart count: 0
 
 | Before editing the bind-mounted file | After editing the same file |
 | --- | --- |
-| ![Bind mount before edit](../evidence/screenshots/docker-networking/bind-mount-before.png) | ![Bind mount after edit](../evidence/screenshots/docker-networking/bind-mount-after.png) |
+| ![Bind mount before edit](screenshots/bind-mount-before.png) | ![Bind mount after edit](screenshots/bind-mount-after.png) |
 
 
 ## 4. Overlay network research
