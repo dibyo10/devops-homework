@@ -1,3 +1,5 @@
 This tracked file is used to demonstrate Git commit behavior.
 
 Initial branch version.
+
+This tracked change is automatically staged by git commit -a.
