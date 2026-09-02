@@ -42,11 +42,11 @@ All six containers reported `Up` with their expected port mappings.
 
 | Node.js | Python | Java |
 | --- | --- | --- |
-| ![Node.js Hello World](../evidence/screenshots/nodejs-app.png) | ![Python Hello World](../evidence/screenshots/python-app.png) | ![Java Hello World](../evidence/screenshots/java-app.png) |
+| ![Node.js Hello World](../evidence/screenshots/docker-apps/nodejs-app.png) | ![Python Hello World](../evidence/screenshots/docker-apps/python-app.png) | ![Java Hello World](../evidence/screenshots/docker-apps/java-app.png) |
 
 | Apache | React | Nginx |
 | --- | --- | --- |
-| ![Apache Hello World](../evidence/screenshots/apache-app.png) | ![React Hello World](../evidence/screenshots/react-app.png) | ![Nginx Hello World](../evidence/screenshots/nginx-app.png) |
+| ![Apache Hello World](../evidence/screenshots/docker-apps/apache-app.png) | ![React Hello World](../evidence/screenshots/docker-apps/react-app.png) | ![Nginx Hello World](../evidence/screenshots/docker-apps/nginx-app.png) |
 
 Each application can also be built independently, for example:
 

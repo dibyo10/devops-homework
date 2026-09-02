@@ -34,4 +34,4 @@ NAMES                 STATUS        PORTS
 homework-multistage   Up 1 second   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
 ```
 
-![Multi-stage application on port 8080](../evidence/screenshots/multi-stage-app.png)
+![Multi-stage application on port 8080](../evidence/screenshots/multi-stage-build/multi-stage-app.png)
