@@ -31,7 +31,7 @@ jobs:
           bandit -r final-devops-project/application/app.py -f json -o reports/bandit.json
           pip-audit -r final-devops-project/application/requirements.txt -f json -o reports/pip-audit.json
       - name: Scan committed secrets
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
           scan-ref: .
@@ -42,7 +42,7 @@ jobs:
       - name: Build image
         run: docker build -f final-devops-project/docker/Dockerfile -t devops-final:${{ github.sha }} final-devops-project
       - name: Scan container image
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: devops-final:${{ github.sha }}
           scanners: vuln
