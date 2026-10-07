@@ -1,5 +1,9 @@
 # Docker multi-stage build
 
+Direct macOS Terminal capture of the running multi-stage image and HTTP response:
+
+![Multi-stage terminal](screenshots/terminal.png)
+
 ## Student details
 
 - Name: Dibyo Chakraborty

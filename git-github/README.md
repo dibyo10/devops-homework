@@ -1,5 +1,9 @@
 # Git and GitHub evidence
 
+Direct macOS Terminal capture of the repository, branch and commit authors:
+
+![Git terminal](screenshots/terminal.png)
+
 The required workflow was performed in this repository rather than copied from an example.
 
 ## `git commit -m` versus `git commit -a -m`
@@ -57,4 +61,3 @@ git show --stat 8d3ae3c
 git show git-practice:git-github/branch-only-note.txt
 test ! -e git-github/branch-only-note.txt
 ```
-

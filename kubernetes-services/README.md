@@ -66,4 +66,4 @@ NodePort was reached from macOS through the URL emitted by Minikube. LoadBalance
 ![NodePort host connectivity](screenshots/nodeport.png)
 ![LoadBalancer host connectivity](screenshots/loadbalancer.png)
 
-Screenshots render the captured command transcripts using Playwright.
+Screenshots directly capture macOS Terminal running fresh Service, NodePort and host-side LoadBalancer tunnel requests.

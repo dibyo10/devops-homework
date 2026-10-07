@@ -26,4 +26,7 @@ On 2026-10-07, anonymous GHCR access to image `934e182778f559eb3bc56c312e261b5ad
 
 All nine resources were destroyed after verification. AWS reports the EC2 instance terminated and Terraform state is empty.
 
-![Final AWS apply and destroy](screenshots/aws-run.png)
+Direct Mac Terminal capture below displays the explicitly labelled historical apply/destroy log and a fresh empty-state check; AWS resources were not recreated for the screenshot.
+
+![Historical final AWS apply and destroy in Terminal](screenshots/aws-run.png)
+![Fresh Terraform validation in Terminal](screenshots/validation.png)

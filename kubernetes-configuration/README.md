@@ -63,4 +63,4 @@ Cleanup: `kubectl delete namespace hw-configuration`.
 ![Configuration and Secret before/after](screenshots/config-and-secret.png)
 ![Ingress routing](screenshots/ingress.png)
 
-Screenshots render saved actual command transcripts using Playwright.
+Screenshots directly capture macOS Terminal running fresh configuration checks and host-side ingress requests.

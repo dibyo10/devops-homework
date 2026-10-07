@@ -1,5 +1,16 @@
 # Docker Hello World applications
 
+## Direct Mac Terminal screenshots
+
+Fresh container status, HTTP responses and logs, captured from macOS Terminal:
+
+![Node.js terminal](screenshots/nodejs-terminal.png)
+![Python terminal](screenshots/python-terminal.png)
+![Java terminal](screenshots/java-terminal.png)
+![Apache terminal](screenshots/apache-terminal.png)
+![React terminal](screenshots/react-terminal.png)
+![Nginx terminal](screenshots/nginx-terminal.png)
+
 Six separate applications and Dockerfiles are provided in the exact requested folders.
 
 | Application | Container port | Host URL with Compose |

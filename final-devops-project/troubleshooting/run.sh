@@ -33,5 +33,6 @@ kubectl delete pod challenge-client
   helm --kube-context devops-homework history challenge --namespace hw-final-troubleshooting
 } > after-output.txt 2>&1
 for stage in before wrong-port after; do
-  python3 ../../scripts/capture-output.py "$stage-output.txt" "screenshots/$stage.png"
+  printf -v capture_command 'echo "Recorded fault-injection stage: %s (saved log excerpt)"; tail -30 %q' "$stage" "$PWD/$stage-output.txt"
+  python3 ../../scripts/capture-terminal.py "screenshots/$stage.png" "$capture_command"
 done

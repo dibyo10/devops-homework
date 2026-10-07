@@ -1,5 +1,12 @@
 # Docker networking and volumes
 
+## Direct Mac Terminal screenshots
+
+Fresh container-to-container HTTP and bind-mount inspection:
+
+![Container networking terminal](screenshots/terminal.png)
+![Bind mount terminal](screenshots/bind-mount-terminal.png)
+
 ## 1. Three-container networking
 
 The Compose topology creates three networks. The frontend shares `frontend-network` with the backend. The backend shares `backend-network` with MySQL. The database also has a separate `database-network`. The backend is attached to exactly two networks as required.

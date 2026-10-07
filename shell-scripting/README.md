@@ -1,5 +1,9 @@
 # System information script
 
+Direct macOS Terminal capture of a fresh script execution. The process listing is omitted from the displayed excerpt; the report is generated in a temporary directory:
+
+![Script terminal](screenshots/terminal.png)
+
 The script uses variables, `read -p`, `mkdir`, `touch`, `echo`, `df`, `ps`, and `>` redirection as required.
 
 ## Run
@@ -35,4 +39,3 @@ head system-info-output/running_processes.txt
 ```
 
 The full isolated test run is recorded in [`observed-output.md`](observed-output.md).
-

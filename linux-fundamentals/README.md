@@ -1,5 +1,9 @@
 # Linux fundamentals
 
+Direct macOS Terminal capture of local Unix system checks (macOS, not a Linux host):
+
+![Unix terminal](screenshots/terminal.png)
+
 ## 1. Soft links and hard links
 
 A hard link is another directory entry for the same inode and data. Both names are equal; deleting one does not remove the data while another hard link exists. Hard links normally cannot cross filesystems and cannot target directories.

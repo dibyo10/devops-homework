@@ -1,5 +1,9 @@
 # Networking fundamentals
 
+Direct macOS Terminal capture of interfaces, routes, DNS lookup and an HTTPS request:
+
+![Networking terminal](screenshots/terminal.png)
+
 These commands were executed on the submission host on 2 September 2026. Addresses and routes change between networks, so the output is evidence from one run rather than values to copy.
 
 The homework refers to a separately shared `devops-hero` repository without giving its URL. This exercise covers the standard Linux/networking command set independently and records both commands and observed results.
@@ -120,4 +124,3 @@ dig github.com A                # IPv4 DNS records
 dig github.com AAAA             # IPv6 DNS records
 nc -vz github.com 443           # test one TCP port
 ```
-

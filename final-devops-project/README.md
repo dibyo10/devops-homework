@@ -1,5 +1,9 @@
 # Session 21: Final DevOps project
 
+Fresh deployment and application test checks, captured directly from macOS Terminal:
+
+![Final project terminal](screenshots/terminal.png)
+
 Dibyo Chakraborty · 24BCS10302
 
 A small Python HTTP application connects the complete delivery path. It returns student identity and configuration as JSON, exposes health/readiness probes and Prometheus uptime metrics, and writes request logs to stdout/stderr. It uses only the Python standard library.

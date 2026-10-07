@@ -20,7 +20,7 @@ See [security implementation and limits](../final-devops-project/security/README
 
 [Run 37637687420](https://github.com/dibyo10/devops-homework/actions/runs/37637687420) passed tests, SAST, SCA, and secret scanning, but Trivy rejected HIGH vulnerabilities in packaging tools bundled in the base image. The dependent publication/deployment job was skipped. The runtime needs no package installer, so the Dockerfile removes pip and its ensurepip bootstrap bundle. No CVE suppression or gate weakening was used.
 
-The [captured report](security-gate-failure.txt) identifies the affected msgpack, setuptools, and urllib3 versions. The screenshot renders that actual command output.
+The [captured report](security-gate-failure.txt) identifies the affected msgpack, setuptools, and urllib3 versions. The screenshot directly captures macOS Terminal querying the original failed GitHub Actions run.
 
 ![Image security gate blocks publication](screenshots/security-gate-failure.png)
 

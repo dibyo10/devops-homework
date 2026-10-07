@@ -25,7 +25,7 @@ done
 docker compose -f docker-apps/compose.yaml config --quiet
 docker compose -f docker-networking/compose.yaml config --quiet
 
-for script in kubernetes-workloads/run-strategies.sh kubernetes-services/verify.sh kubernetes-configuration/verify.sh kubernetes-troubleshooting/run.sh helm/run.sh helm/verify-production.sh; do
+for script in kubernetes-workloads/run-strategies.sh kubernetes-workloads/capture-lifecycle.sh final-devops-project/troubleshooting/run.sh kubernetes-services/verify.sh kubernetes-configuration/verify.sh kubernetes-troubleshooting/run.sh helm/run.sh helm/verify-production.sh; do
   bash -n "$script"
 done
 

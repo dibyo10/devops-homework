@@ -34,10 +34,12 @@ terraform destroy
 
 The tests use Terraform's mocked AWS provider to check privacy and input validation without creating cloud resources. Local checks and real AWS execution are reported separately in `validation.txt`; mocked plans are not evidence of a live deployment.
 
-![Local Terraform validation and AWS login status](screenshots/validation.png)
+![Fresh Terraform validation and mocked tests in Mac Terminal](screenshots/validation.png)
 
 After reauthentication, the live AWS run created both resources, verified the bucket using `head-bucket`, inspected state/outputs and destroyed both resources. [Live transcript](live-output.txt).
 
-![AWS create, inspect and destroy](screenshots/aws-run.png)
+Direct Mac Terminal capture below displays the explicitly labelled historical apply/destroy log and a fresh empty-state check; AWS resources were not recreated for the screenshot.
+
+![Historical AWS create and destroy log in Terminal](screenshots/aws-run.png)
 
 Reference: [Terraform S3 resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket), [Amazon S3 guide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html).

@@ -40,7 +40,7 @@ EC2, root storage and public IPv4 can incur charges. Destroy the lab after verif
 
 `terraform test` checks the public subnet, route and HTTP/HTTPS-only ingress with a mocked provider. See `validation.txt` for actual command results and whether live AWS execution was possible. Mocked tests do not establish EC2 boot success or AWS permissions.
 
-![Local Terraform validation and AWS login status](screenshots/validation.png)
+![Fresh Terraform validation and mocked tests in Mac Terminal](screenshots/validation.png)
 
 After AWS reauthentication, all nine resources were applied, state and outputs inspected, the private bucket checked with `head-bucket`, and nginx returned HTTP 200 on the EC2 public address. [Terraform transcript](live-output.txt) and [HTTP output](http-output.txt) record the run and cleanup.
 
@@ -48,6 +48,8 @@ After AWS reauthentication, all nine resources were applied, state and outputs i
 
 All nine resources were destroyed after validation and the local state list was empty.
 
-![AWS apply and destroy summary](screenshots/aws-run.png)
+Direct Mac Terminal capture below displays the explicitly labelled historical apply/destroy log and a fresh empty-state check; AWS resources were not recreated for the screenshot.
+
+![Historical AWS apply and destroy summary in Terminal](screenshots/aws-run.png)
 
 Reference: [AWS VPC guide](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html), [EC2 guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html).

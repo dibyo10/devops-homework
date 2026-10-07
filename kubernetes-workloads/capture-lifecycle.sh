@@ -11,5 +11,6 @@ for manifest in pod-lifecycle/*.yaml; do
     printf '$ kubectl describe -f %s\n' "$manifest"
     kubectl describe -f "$manifest"
   } > "pod-lifecycle/$name-output.txt"
-  python3 ../scripts/capture-output.py "pod-lifecycle/$name-output.txt" "screenshots/$name.png"
+  printf -v capture_command 'kubectl --context devops-homework get -f %q -o wide; kubectl --context devops-homework describe -f %q | tail -28' "$PWD/$manifest" "$PWD/$manifest"
+  python3 ../scripts/capture-terminal.py "screenshots/$name.png" "$capture_command"
 done

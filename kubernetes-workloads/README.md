@@ -89,7 +89,7 @@ The isolated Minikube run completed all four strategies. Canary returned both st
 ![Deployment strategies](screenshots/strategies.png)
 ![Blue-green and recreate responses](screenshots/versions.png)
 
-Each screenshot below renders the saved, actual get/describe command output. These are transcript screenshots, not copies of the reference repository.
+Each screenshot below directly captures macOS Terminal running fresh get/describe checks. The termination log is explicitly labelled historical; the Pod was also freshly created and deleted for the terminal capture. These are not images from the reference repository.
 
 ### 01-running
 

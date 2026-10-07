@@ -40,6 +40,6 @@ kubectl -n hw-basics rollout status deployment/hello
 
 A Pod is a scheduling unit containing containers. A Deployment controls ReplicaSets, which maintain replica counts. A Service gives changing Pod addresses a stable name and virtual address. Namespaces scope names and access. Labels connect selectors to resources. ConfigMaps and Secrets inject configuration; PVCs request durable storage.
 
-The sequence covers the tutorial's create, deploy, explore, expose, scale, and update modules. Inspect the actual run in [output.txt](output.txt) and [screenshot](screenshots/cluster.png). Screenshots of command output are rendered from the accompanying transcripts with Playwright.
+The sequence covers the tutorial's create, deploy, explore, expose, scale, and update modules. Inspect the original run in [output.txt](output.txt) and the fresh cluster check in [screenshot](screenshots/cluster.png), captured directly from macOS Terminal.
 
 Sources: [Minikube installation](https://minikube.sigs.k8s.io/docs/start/), [Kubernetes Basics](https://kubernetes.io/docs/tutorials/kubernetes-basics/), [architecture](https://kubernetes.io/docs/concepts/architecture/).

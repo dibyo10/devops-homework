@@ -1,5 +1,9 @@
 # Session 18 — AWS services research
 
+Direct Mac Terminal capture of authenticated AWS identity (research sections below are conceptual, not claims that every service was provisioned):
+
+![AWS Terminal check](screenshots/terminal.png)
+
 Dibyo Chakraborty · 24BCS10302
 
 | Service | Role in a deployment | Notes |

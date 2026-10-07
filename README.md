@@ -40,7 +40,7 @@ Submission for the DevOps homework, including the October Kubernetes, Helm, CI/C
 
 Every application has its own Dockerfile. Runtime evidence and exact commands are kept with each topic so the work is reproducible.
 
-The supplied friend's `Class_Assignments/` was used to identify exercise scope and presentation style. New manifests, explanations, runtime output, and screenshots belong to this submission. Screenshots are inside each project's `screenshots/` folder. Command screenshots are Playwright renderings of the accompanying recorded transcripts, labelled as such; browser screenshots capture live application pages.
+The supplied friend's `Class_Assignments/` was used to identify exercise scope and presentation style. New manifests, explanations, runtime output, and screenshots belong to this submission. Screenshots are inside each project's `screenshots/` folder. Terminal screenshots are direct, unmodified captures of macOS Terminal on Dibyo's Mac, taken with `screencapture`; browser screenshots capture live application pages. Fresh checks were captured on October 7, 2026. Historical fault-injection and AWS apply/destroy logs are explicitly labelled when displayed in Terminal: these are real window captures of saved logs, not claims of a new execution. AWS resources remain destroyed. The native capture helper is [scripts/capture-terminal.py](scripts/capture-terminal.py).
 
 ## October execution
 

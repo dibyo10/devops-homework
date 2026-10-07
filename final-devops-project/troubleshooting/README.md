@@ -26,4 +26,4 @@ This run uses Helm 4 server-side apply. The deliberate kubectl patch owns the ch
 ![Ready Pod but wrong Service port](screenshots/wrong-port.png)
 ![Repaired Helm release and HTTP response](screenshots/after.png)
 
-Screenshots render actual command transcripts captured with Playwright. Cleanup only this challenge with `helm --kube-context devops-homework uninstall challenge -n hw-final-troubleshooting` and `kubectl --context devops-homework delete namespace hw-final-troubleshooting`.
+Screenshots directly capture macOS Terminal. The before/wrong-port screenshots explicitly display historical fault-injection logs; the after screenshot shows a fresh live check of the repaired release. Cleanup only this challenge with `helm --kube-context devops-homework uninstall challenge -n hw-final-troubleshooting` and `kubectl --context devops-homework delete namespace hw-final-troubleshooting`.
