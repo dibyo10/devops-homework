@@ -1,0 +1,135 @@
+---
+# Source: final-devops/templates/app.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: final-devops
+type: Opaque
+stringData:
+  DEMO_LABEL: classroom-non-sensitive-example
+
+---
+# Source: final-devops/templates/app.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: final-devops
+data:
+  APP_MESSAGE: "DevOps final project - 24BCS10302"
+
+---
+# Source: final-devops/templates/app.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: final-devops
+spec:
+  selector:
+    app: final-devops
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+
+---
+# Source: final-devops/templates/app.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: final-devops
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: final-devops
+  template:
+    metadata:
+      labels:
+        app: final-devops
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: /metrics
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: application
+          image: "devops-final:local"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: final-devops
+            - secretRef:
+                name: final-devops
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+
+---
+# Source: final-devops/templates/app.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: final-devops
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: final-devops
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+
+---
+# Source: final-devops/templates/app.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: final-devops
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: final-devops.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: final-devops
+                port:
+                  number: 8080

@@ -1,0 +1,10 @@
+groups:
+  - name: application
+    rules:
+      - alert: FinalApplicationDown
+        expr: up{job="final-devops"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Final project application is unreachable

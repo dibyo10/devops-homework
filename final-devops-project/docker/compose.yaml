@@ -1,0 +1,13 @@
+services:
+  application:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: devops-final:local
+    ports:
+      - "127.0.0.1:8088:8080"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL

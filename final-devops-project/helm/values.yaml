@@ -1,0 +1,11 @@
+replicaCount: 2
+image:
+  repository: devops-final
+  tag: local
+  pullPolicy: IfNotPresent
+message: DevOps final project - 24BCS10302
+ingress:
+  enabled: true
+  host: final-devops.local
+hpa:
+  enabled: true

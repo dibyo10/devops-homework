@@ -1,0 +1,119 @@
+name: DevOps CI and Security
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: devops-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Test application
+        run: python -m unittest discover -s final-devops-project/application -v
+      - name: Install security tools
+        run: python -m pip install bandit pip-audit
+      - name: SAST and SCA
+        run: |
+          mkdir -p reports
+          bandit -r final-devops-project/application/app.py -f json -o reports/bandit.json
+          pip-audit -r final-devops-project/application/requirements.txt -f json -o reports/pip-audit.json
+      - name: Scan committed secrets
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: secret
+          exit-code: '1'
+          format: json
+          output: reports/secrets.json
+      - name: Build image
+        run: docker build -f final-devops-project/docker/Dockerfile -t devops-final:${{ github.sha }} final-devops-project
+      - name: Scan container image
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: devops-final:${{ github.sha }}
+          scanners: vuln
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+          format: json
+          output: reports/image.json
+      - name: Save tested image
+        run: docker save devops-final:${{ github.sha }} -o /tmp/devops-image.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tested-image
+          path: /tmp/devops-image.tar
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-reports
+          path: reports/
+
+  publish-and-deploy:
+    needs: test-and-security
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: tested-image
+          path: /tmp
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish tested image
+        run: |
+          docker load -i /tmp/devops-image.tar
+          docker tag devops-final:${{ github.sha }} ghcr.io/dibyo10/devops-homework:${{ github.sha }}
+          docker push ghcr.io/dibyo10/devops-homework:${{ github.sha }}
+          docker image rm ghcr.io/dibyo10/devops-homework:${{ github.sha }}
+          docker pull ghcr.io/dibyo10/devops-homework:${{ github.sha }}
+      - uses: helm/kind-action@v1
+        with:
+          cluster_name: devops-ci
+      - uses: azure/setup-helm@v4.3.0
+      - name: Deploy published image with Helm
+        run: |
+          kind load docker-image ghcr.io/dibyo10/devops-homework:${{ github.sha }} --name devops-ci
+          helm lint final-devops-project/helm
+          helm upgrade --install final-devops final-devops-project/helm --namespace final-devops --create-namespace --set image.repository=ghcr.io/dibyo10/devops-homework --set image.tag=${{ github.sha }} --set ingress.enabled=false --set hpa.enabled=false --wait --timeout 120s
+          kubectl rollout status -n final-devops deployment/final-devops --timeout=120s
+      - name: Verify running application
+        run: |
+          kubectl port-forward -n final-devops svc/final-devops 8088:8080 > /tmp/port-forward.log 2>&1 &
+          curl --fail --retry 15 --retry-connrefused --retry-delay 2 http://127.0.0.1:8088/health
+          curl --fail http://127.0.0.1:8088/metrics
+          kubectl get pods,svc -n final-devops
+      - name: Collect deployment logs
+        if: always()
+        run: |
+          mkdir -p deployment-report
+          kubectl get all -n final-devops > deployment-report/resources.txt || true
+          kubectl logs -n final-devops deployment/final-devops > deployment-report/application.log 2>&1 || true
+          kubectl get events -n final-devops --sort-by=.lastTimestamp > deployment-report/events.txt || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: deployment-report
+          path: deployment-report/
