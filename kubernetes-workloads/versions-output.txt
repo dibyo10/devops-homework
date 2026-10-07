@@ -1,0 +1,8 @@
+service/bluegreen patched
+bluegreen-blue blue Dibyo Chakraborty 24BCS10302
+service/bluegreen patched
+bluegreen-blue blue Dibyo Chakraborty 24BCS10302
+recreate-v2
+NAME        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE     SELECTOR
+bluegreen   ClusterIP   10.97.97.143   <none>        80/TCP    2m55s   app=bluegreen-green
+bluegreen-green green Dibyo Chakraborty 24BCS10302

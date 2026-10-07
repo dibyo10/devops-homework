@@ -1,0 +1,60 @@
+$ kubectl get -f pod-lifecycle/12-termination.yaml
+NAME                    READY   STATUS    RESTARTS   AGE   IP            NODE              NOMINATED NODE   READINESS GATES
+lifecycle-termination   1/1     Running   0          83s   10.244.0.39   devops-homework   <none>           <none>
+$ kubectl describe -f pod-lifecycle/12-termination.yaml
+Name:             lifecycle-termination
+Namespace:        hw-workloads
+Priority:         0
+Service Account:  default
+Node:             devops-homework/192.168.49.2
+Start Time:       Wed, 07 Oct 2026 20:02:44 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.39
+IPs:
+  IP:  10.244.0.39
+Containers:
+  app:
+    Container ID:  containerd://2fec96d2b411a90e559f19c4e7bd6fbc21511b99eaa969ac9eae055e25c2aa96
+    Image:         busybox:1.36
+    Image ID:      docker.io/library/busybox@sha256:73aaf090f3d85aa34ee199857f03fa3a95c8ede2ffd4cc2cdb5b94e566b11662
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      trap 'echo SIGTERM-cleanup; sleep 3; echo cleanup-complete; exit 0' TERM; while true; do sleep 1 & wait $!; done
+    State:          Running
+      Started:      Wed, 07 Oct 2026 20:03:58 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-wdj6g (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-wdj6g:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  83s   default-scheduler  Successfully assigned hw-workloads/lifecycle-termination to devops-homework
+  Normal  Pulling    83s   kubelet            spec.containers{app}: Pulling image "busybox:1.36"
+  Normal  Pulled     9s    kubelet            spec.containers{app}: Successfully pulled image "busybox:1.36" in 1.928s (1m13.646s including waiting). Image size: 1906887 bytes.
+  Normal  Created    9s    kubelet            spec.containers{app}: Container created
+  Normal  Started    9s    kubelet            spec.containers{app}: Container started

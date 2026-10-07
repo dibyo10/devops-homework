@@ -1,0 +1,19 @@
+Frontend: Dibyo Chakraborty 24BCS10302 (homework)
+Backend: 24BCS10302
+Name:             homework
+Labels:           <none>
+Namespace:        hw-configuration
+Address:          192.168.49.2
+Ingress Class:    nginx
+Default backend:  <default>
+Rules:
+  Host            Path  Backends
+  ----            ----  --------
+  homework.local  
+                  /api   backend:80 (10.244.0.28:80)
+                  /      frontend:80 (10.244.0.27:80)
+Annotations:      <none>
+Events:
+  Type    Reason  Age                From                      Message
+  ----    ------  ----               ----                      -------
+  Normal  Sync    54s (x2 over 77s)  nginx-ingress-controller  Scheduled for sync

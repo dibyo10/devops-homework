@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: hpa-demo, namespace: hw-storage}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: hpa-demo}}
+  template:
+    metadata: {labels: {app: hpa-demo}}
+    spec:
+      containers:
+        - name: web
+          image: registry.k8s.io/hpa-example
+          ports: [{containerPort: 80}]
+          resources:
+            requests: {cpu: 100m, memory: 32Mi}
+            limits: {cpu: 500m, memory: 128Mi}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: hpa-demo, namespace: hw-storage}
+spec:
+  selector: {app: hpa-demo}
+  ports: [{port: 80, targetPort: 80}]
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: {name: hpa-demo, namespace: hw-storage}
+spec:
+  scaleTargetRef: {apiVersion: apps/v1, kind: Deployment, name: hpa-demo}
+  minReplicas: 1
+  maxReplicas: 5
+  behavior:
+    scaleDown: {stabilizationWindowSeconds: 30}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: {type: Utilization, averageUtilization: 50}

@@ -1,0 +1,20 @@
+NAME                  READY   STATUS    RESTARTS      AGE
+lifecycle-readiness   1/1     Running   0             2m15s
+lifecycle-startup     1/1     Running   0             2m15s
+lifecycle-init        1/1     Running   0             2m15s
+lifecycle-liveness    1/1     Running   1 (13s ago)   2m15s
+initialized
+Connecting to 127.0.0.1:8080 (127.0.0.1:8080)
+  HTTP/1.1 200 OK
+  Date: Wed, 07 Oct 2026 14:34:03 GMT
+  Connection: close
+  Content-type: text/html
+  Accept-Ranges: bytes
+  Last-Modified: Wed, 07 Oct 2026 14:34:00 GMT
+  ETag: "6ac65858-13"
+  Content-Length: 19
+  
+shared-pod-network
+writing to stdout
+-                    100% |********************************|    19  0:00:00 ETA
+written to stdout

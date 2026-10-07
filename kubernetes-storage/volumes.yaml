@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: temporary-volumes
+  namespace: hw-storage
+spec:
+  containers:
+    - name: demo
+      image: busybox:1.37
+      command: [sh, -c, "echo shared > /scratch/message; echo node-local > /node/message; sleep 3600"]
+      volumeMounts:
+        - {name: scratch, mountPath: /scratch}
+        - {name: node, mountPath: /node}
+  volumes:
+    - name: scratch
+      emptyDir: {}
+    - name: node
+      hostPath:
+        path: /tmp/devops-homework-volume
+        type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: homework-static
+spec:
+  capacity: {storage: 100Mi}
+  accessModes: [ReadWriteOnce]
+  storageClassName: homework-static
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: /tmp/devops-homework-pv, type: DirectoryOrCreate}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: static-data, namespace: hw-storage}
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: homework-static
+  resources: {requests: {storage: 100Mi}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: web-data, namespace: hw-storage}
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: standard
+  resources: {requests: {storage: 100Mi}}

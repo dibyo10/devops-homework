@@ -1,0 +1,57 @@
+$ kubectl get -f pod-lifecycle/06-imagepullbackoff.yaml
+NAME                    READY   STATUS             RESTARTS   AGE   IP            NODE              NOMINATED NODE   READINESS GATES
+lifecycle-image-error   0/1     ImagePullBackOff   0          80s   10.244.0.33   devops-homework   <none>           <none>
+$ kubectl describe -f pod-lifecycle/06-imagepullbackoff.yaml
+Name:             lifecycle-image-error
+Namespace:        hw-workloads
+Priority:         0
+Service Account:  default
+Node:             devops-homework/192.168.49.2
+Start Time:       Wed, 07 Oct 2026 20:02:44 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Pending
+IP:               10.244.0.33
+IPs:
+  IP:  10.244.0.33
+Containers:
+  app:
+    Container ID:   
+    Image:          busybox:homework-intentionally-missing-tag
+    Image ID:       
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       ImagePullBackOff
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7sr2g (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-7sr2g:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age               From               Message
+  ----     ------     ----              ----               -------
+  Normal   Scheduled  80s               default-scheduler  Successfully assigned hw-workloads/lifecycle-image-error to devops-homework
+  Warning  Failed     14s               kubelet            spec.containers{app}: Failed to pull image "busybox:homework-intentionally-missing-tag": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/busybox:homework-intentionally-missing-tag": failed to resolve reference "docker.io/library/busybox:homework-intentionally-missing-tag": docker.io/library/busybox:homework-intentionally-missing-tag: not found
+  Warning  Failed     14s               kubelet            spec.containers{app}: Error: ErrImagePull
+  Normal   BackOff    13s               kubelet            spec.containers{app}: Back-off pulling image "busybox:homework-intentionally-missing-tag"
+  Warning  Failed     13s               kubelet            spec.containers{app}: Error: ImagePullBackOff
+  Normal   Pulling    1s (x2 over 80s)  kubelet            spec.containers{app}: Pulling image "busybox:homework-intentionally-missing-tag"

@@ -1,0 +1,10 @@
+NAME                             READY   STATUS        RESTARTS   AGE   IP            NODE              NOMINATED NODE   READINESS GATES
+pod/challenge-54bb94df86-zg6f4   1/1     Running       0          13s   10.244.0.97   devops-homework   <none>           <none>
+pod/challenge-57769cf6cf-gdpc2   1/1     Terminating   0          54s   10.244.0.95   devops-homework   <none>           <none>
+
+NAME                                             ADDRESSTYPE   PORTS   ENDPOINTS                 AGE
+endpointslice.discovery.k8s.io/challenge-2q26q   IPv4          9999    10.244.0.95,10.244.0.97   75s
+pod/challenge-client created
+pod/challenge-client condition met
+Connecting to challenge:8080 (10.107.125.229:8080)
+wget: can't connect to remote host (10.107.125.229): Connection refused

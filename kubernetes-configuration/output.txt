@@ -1,0 +1,44 @@
+namespace/hw-configuration created
+configmap/app-config created
+deployment.apps/frontend created
+deployment.apps/backend created
+service/frontend created
+service/backend created
+ingress.networking.k8s.io/homework created
+secret/app-secret created
+Waiting for deployment "frontend" rollout to finish: 0 of 1 updated replicas are available...
+deployment "frontend" successfully rolled out
+deployment "backend" successfully rolled out
+homework Dibyo Chakraborty 24BCS10302
+Demo secret matches
+secret/newline-demo created
+pod/secret-check created
+pod/secret-check condition met
+Length: 11
+0000000   m   y   p   a   s   s   w   o   r   d  \n
+0000013
+secret/newline-demo configured
+pod "secret-check" deleted from hw-configuration namespace
+pod/secret-check created
+pod/secret-check condition met
+Length: 10
+0000000   m   y   p   a   s   s   w   o   r   d
+0000012
+NAME                         DATA   AGE
+configmap/app-config         3      64s
+configmap/kube-root-ca.crt   1      64s
+
+NAME                  TYPE     DATA   AGE
+secret/app-secret     Opaque   1      63s
+secret/newline-demo   Opaque   1      4s
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/backend    1/1     1            1           64s
+deployment.apps/frontend   1/1     1            1           64s
+
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/backend    ClusterIP   10.103.25.220   <none>        80/TCP    64s
+service/frontend   ClusterIP   10.98.227.105   <none>        80/TCP    64s
+
+NAME                                 CLASS   HOSTS            ADDRESS        PORTS   AGE
+ingress.networking.k8s.io/homework   nginx   homework.local   192.168.49.2   80      64s

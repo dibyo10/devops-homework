@@ -1,0 +1,248 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rolling
+  namespace: hw-workloads
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: rolling
+  template:
+    metadata:
+      labels:
+        app: rolling
+        family: rolling
+        version: v1
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "echo 'rolling v1 Dibyo Chakraborty 24BCS10302' > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recreate
+  namespace: hw-workloads
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: recreate
+  template:
+    metadata:
+      labels:
+        app: recreate
+        family: recreate
+        version: v1
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "echo 'recreate v1 Dibyo Chakraborty 24BCS10302' > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bluegreen-blue
+  namespace: hw-workloads
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: bluegreen-blue
+  template:
+    metadata:
+      labels:
+        app: bluegreen-blue
+        family: bluegreen
+        version: blue
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "echo 'bluegreen-blue blue Dibyo Chakraborty 24BCS10302' > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bluegreen-green
+  namespace: hw-workloads
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: bluegreen-green
+  template:
+    metadata:
+      labels:
+        app: bluegreen-green
+        family: bluegreen
+        version: green
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "echo 'bluegreen-green green Dibyo Chakraborty 24BCS10302' > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary-stable
+  namespace: hw-workloads
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: canary-stable
+  template:
+    metadata:
+      labels:
+        app: canary-stable
+        family: canary
+        version: stable
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "echo 'canary-stable stable Dibyo Chakraborty 24BCS10302' > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary-preview
+  namespace: hw-workloads
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: canary-preview
+  template:
+    metadata:
+      labels:
+        app: canary-preview
+        family: canary
+        version: preview
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "echo 'canary-preview preview Dibyo Chakraborty 24BCS10302' > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rolling
+  namespace: hw-workloads
+spec:
+  selector:
+    app: rolling
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recreate
+  namespace: hw-workloads
+spec:
+  selector:
+    app: recreate
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bluegreen
+  namespace: hw-workloads
+spec:
+  selector:
+    app: bluegreen-blue
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary
+  namespace: hw-workloads
+spec:
+  selector:
+    family: canary
+  ports:
+    - port: 80
+      targetPort: 80

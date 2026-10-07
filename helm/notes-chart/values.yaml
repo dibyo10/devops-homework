@@ -1,0 +1,4 @@
+replicaCount: 1
+image: nginx:1.29-alpine
+message: Notes application version 1
+environment: development

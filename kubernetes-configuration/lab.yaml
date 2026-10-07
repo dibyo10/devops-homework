@@ -1,0 +1,111 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hw-configuration
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: hw-configuration
+data:
+  APP_ENV: homework
+  STUDENT: Dibyo Chakraborty
+  ENROLLMENT: 24BCS10302
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: hw-configuration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secret
+          command: ["sh", "-c", "echo \"Frontend: $STUDENT $ENROLLMENT ($APP_ENV)\" > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: hw-configuration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "mkdir -p /usr/share/nginx/html/api; echo 'Backend: 24BCS10302' > /usr/share/nginx/html/api/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: hw-configuration
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: hw-configuration
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homework
+  namespace: hw-configuration
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: homework.local
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80

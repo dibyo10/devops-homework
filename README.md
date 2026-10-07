@@ -1,6 +1,6 @@
 # DevOps Homework
 
-End-to-end submission for the Linux, shell scripting, networking, Git/GitHub, Docker, multi-stage build, networking, and volume exercises in the supplied homework.
+Submission for the DevOps homework, including the October Kubernetes, Helm, CI/CD, cloud, monitoring and final-project assignments.
 
 ## Student details
 
@@ -18,6 +18,19 @@ End-to-end submission for the Linux, shell scripting, networking, Git/GitHub, Do
 | Docker Hello World apps | [`docker-apps/README.md`](docker-apps/README.md) |
 | Multi-stage build | [`multi-stage-build/README.md`](multi-stage-build/README.md) |
 | Docker networking and volumes | [`docker-networking/README.md`](docker-networking/README.md) |
+| Kubernetes fundamentals | [`kubernetes-fundamentals/README.md`](kubernetes-fundamentals/README.md) |
+| Session 10: deployment strategies and Pod lifecycle | [`kubernetes-workloads/README.md`](kubernetes-workloads/README.md) |
+| Session 11: Services, FQDN and CoreDNS | [`kubernetes-services/README.md`](kubernetes-services/README.md) |
+| Session 12: ConfigMaps, Secrets and Ingress | [`kubernetes-configuration/README.md`](kubernetes-configuration/README.md) |
+| Session 13: storage, HPA and probes | [`kubernetes-storage/README.md`](kubernetes-storage/README.md) |
+| Session 14: troubleshooting | [`kubernetes-troubleshooting/README.md`](kubernetes-troubleshooting/README.md) |
+| Session 15: Helm and rollback | [`helm/README.md`](helm/README.md) |
+| Session 16: CI/CD and GitHub Actions | [`cicd-github-actions/README.md`](cicd-github-actions/README.md) |
+| Session 17: DevSecOps | [`devsecops/README.md`](devsecops/README.md) |
+| Session 18: Terraform S3 and AWS research | [`terraform-s3-demo/README.md`](terraform-s3-demo/README.md), [`aws-services`](aws-services) |
+| Session 19: cloud infrastructure | [`cloud-terraform/README.md`](cloud-terraform/README.md) |
+| Session 20: monitoring, observability and GitOps | [`monitoring-gitops/README.md`](monitoring-gitops/README.md) |
+| Session 21: final project | [`final-devops-project/README.md`](final-devops-project/README.md) |
 
 ## Quick validation
 
@@ -26,3 +39,5 @@ End-to-end submission for the Linux, shell scripting, networking, Git/GitHub, Do
 ```
 
 Every application has its own Dockerfile. Runtime evidence and exact commands are kept with each topic so the work is reproducible.
+
+The supplied friend's `Class_Assignments/` was used to identify exercise scope and presentation style. New manifests, explanations, runtime output, and screenshots belong to this submission. Screenshots are inside each project's `screenshots/` folder. Command screenshots are Playwright renderings of the accompanying recorded transcripts, labelled as such; browser screenshots capture live application pages.

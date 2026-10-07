@@ -1,0 +1,3 @@
+Dibyo Chakraborty 24BCS10302
+NAME       TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+nodeport   NodePort   10.102.167.46   <none>        80:32292/TCP   97s

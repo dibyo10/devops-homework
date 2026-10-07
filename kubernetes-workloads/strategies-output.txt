@@ -1,0 +1,329 @@
+namespace/hw-workloads created
+deployment.apps/rolling created
+deployment.apps/recreate created
+deployment.apps/bluegreen-blue created
+deployment.apps/bluegreen-green created
+deployment.apps/canary-stable created
+deployment.apps/canary-preview created
+service/rolling created
+service/recreate created
+service/bluegreen created
+service/canary created
+replicaset.apps/replicaset-demo created
+Waiting for deployment "rolling" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "rolling" rollout to finish: 1 of 2 updated replicas are available...
+deployment "rolling" successfully rolled out
+Waiting for deployment "recreate" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "recreate" rollout to finish: 1 of 2 updated replicas are available...
+deployment "recreate" successfully rolled out
+Waiting for deployment "bluegreen-blue" rollout to finish: 0 of 1 updated replicas are available...
+deployment "bluegreen-blue" successfully rolled out
+Waiting for deployment "bluegreen-green" rollout to finish: 0 of 1 updated replicas are available...
+deployment "bluegreen-green" successfully rolled out
+Waiting for deployment "canary-stable" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "canary-stable" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "canary-stable" rollout to finish: 2 of 3 updated replicas are available...
+deployment "canary-stable" successfully rolled out
+Waiting for deployment "canary-preview" rollout to finish: 0 of 1 updated replicas are available...
+deployment "canary-preview" successfully rolled out
+NAME                                   READY   STATUS              RESTARTS   AGE   IP            NODE              NOMINATED NODE   READINESS GATES
+pod/bluegreen-blue-5dfd5567f6-24v62    1/1     Running             0          46s   10.244.0.17   devops-homework   <none>           <none>
+pod/bluegreen-green-6ffd9b6c88-rkl42   1/1     Running             0          46s   10.244.0.18   devops-homework   <none>           <none>
+pod/canary-preview-b956f6f55-76c6k     1/1     Running             0          46s   10.244.0.22   devops-homework   <none>           <none>
+pod/canary-stable-5bb8587d4c-77zgm     1/1     Running             0          46s   10.244.0.20   devops-homework   <none>           <none>
+pod/canary-stable-5bb8587d4c-b6dgh     1/1     Running             0          46s   10.244.0.19   devops-homework   <none>           <none>
+pod/canary-stable-5bb8587d4c-pksz7     1/1     Running             0          46s   10.244.0.21   devops-homework   <none>           <none>
+pod/lifecycle-crashloop                0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-failed                   0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-image-error              0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-init                     0/1     Init:0/1            0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-liveness                 0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-multi-container          0/2     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-pending                  0/1     Pending             0          42s   <none>        <none>            <none>           <none>
+pod/lifecycle-readiness                0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-running                  0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-startup                  0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-succeeded                0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/lifecycle-termination              0/1     ContainerCreating   0          42s   <none>        devops-homework   <none>           <none>
+pod/recreate-6548599f4-wmlbt           1/1     Running             0          46s   10.244.0.16   devops-homework   <none>           <none>
+pod/recreate-6548599f4-zcgqt           1/1     Running             0          46s   10.244.0.15   devops-homework   <none>           <none>
+pod/replicaset-demo-mnvc9              0/1     ContainerCreating   0          46s   <none>        devops-homework   <none>           <none>
+pod/replicaset-demo-rfh25              0/1     ContainerCreating   0          45s   <none>        devops-homework   <none>           <none>
+pod/rolling-5f77799696-flh4s           1/1     Running             0          46s   10.244.0.13   devops-homework   <none>           <none>
+pod/rolling-5f77799696-v779c           1/1     Running             0          46s   10.244.0.14   devops-homework   <none>           <none>
+
+NAME                                         DESIRED   CURRENT   READY   AGE   CONTAINERS   IMAGES              SELECTOR
+replicaset.apps/bluegreen-blue-5dfd5567f6    1         1         1       46s   web          nginx:1.27-alpine   app=bluegreen-blue,pod-template-hash=5dfd5567f6
+replicaset.apps/bluegreen-green-6ffd9b6c88   1         1         1       46s   web          nginx:1.27-alpine   app=bluegreen-green,pod-template-hash=6ffd9b6c88
+replicaset.apps/canary-preview-b956f6f55     1         1         1       46s   web          nginx:1.27-alpine   app=canary-preview,pod-template-hash=b956f6f55
+replicaset.apps/canary-stable-5bb8587d4c     3         3         3       46s   web          nginx:1.27-alpine   app=canary-stable,pod-template-hash=5bb8587d4c
+replicaset.apps/recreate-6548599f4           2         2         2       46s   web          nginx:1.27-alpine   app=recreate,pod-template-hash=6548599f4
+replicaset.apps/replicaset-demo              2         2         0       46s   web          nginx:1.27-alpine   app=replicaset-demo
+replicaset.apps/rolling-5f77799696           2         2         2       46s   web          nginx:1.27-alpine   app=rolling,pod-template-hash=5f77799696
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES              SELECTOR
+deployment.apps/bluegreen-blue    1/1     1            1           46s   web          nginx:1.27-alpine   app=bluegreen-blue
+deployment.apps/bluegreen-green   1/1     1            1           46s   web          nginx:1.27-alpine   app=bluegreen-green
+deployment.apps/canary-preview    1/1     1            1           46s   web          nginx:1.27-alpine   app=canary-preview
+deployment.apps/canary-stable     3/3     3            3           46s   web          nginx:1.27-alpine   app=canary-stable
+deployment.apps/recreate          2/2     2            2           46s   web          nginx:1.27-alpine   app=recreate
+deployment.apps/rolling           2/2     2            2           46s   web          nginx:1.27-alpine   app=rolling
+
+NAME                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE   SELECTOR
+service/bluegreen   ClusterIP   10.97.97.143     <none>        80/TCP    46s   app=bluegreen-blue
+service/canary      ClusterIP   10.97.118.228    <none>        80/TCP    46s   family=canary
+service/recreate    ClusterIP   10.103.102.106   <none>        80/TCP    46s   app=recreate
+service/rolling     ClusterIP   10.108.111.130   <none>        80/TCP    46s   app=rolling
+deployment.apps/rolling patched
+Waiting for deployment "rolling" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "rolling" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "rolling" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "rolling" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "rolling" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "rolling" rollout to finish: 1 old replicas are pending termination...
+deployment "rolling" successfully rolled out
+NAME                 DESIRED   CURRENT   READY   AGE
+rolling-5f77799696   0         0         0       48s
+rolling-854774b99c   2         2         2       2s
+service/bluegreen patched
+NAME              ADDRESSTYPE   PORTS   ENDPOINTS     AGE
+bluegreen-2lbsh   IPv4          80      10.244.0.18   48s
+pod/strategy-client created
+pod/strategy-client condition met
+rolling-v2
+bluegreen-green green Dibyo Chakraborty 24BCS10302
+recreate v1 Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+deployment.apps/recreate patched
+Waiting for deployment "recreate" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "recreate" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "recreate" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "recreate" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "recreate" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "recreate" rollout to finish: 1 of 2 updated replicas are available...
+deployment "recreate" successfully rolled out
+LAST SEEN   TYPE      REASON              OBJECT                                  MESSAGE
+88s         Normal    ScalingReplicaSet   deployment/canary-preview               Scaled up replica set canary-preview-b956f6f55 from 0 to 1
+88s         Normal    Scheduled           pod/canary-stable-5bb8587d4c-77zgm      Successfully assigned hw-workloads/canary-stable-5bb8587d4c-77zgm to devops-homework
+88s         Normal    SuccessfulCreate    replicaset/rolling-5f77799696           Created pod: rolling-5f77799696-v779c
+88s         Normal    SuccessfulCreate    replicaset/rolling-5f77799696           Created pod: rolling-5f77799696-flh4s
+88s         Normal    Scheduled           pod/recreate-6548599f4-zcgqt            Successfully assigned hw-workloads/recreate-6548599f4-zcgqt to devops-homework
+88s         Normal    SuccessfulCreate    replicaset/bluegreen-blue-5dfd5567f6    Created pod: bluegreen-blue-5dfd5567f6-24v62
+88s         Normal    ScalingReplicaSet   deployment/bluegreen-blue               Scaled up replica set bluegreen-blue-5dfd5567f6 from 0 to 1
+88s         Normal    Scheduled           pod/bluegreen-green-6ffd9b6c88-rkl42    Successfully assigned hw-workloads/bluegreen-green-6ffd9b6c88-rkl42 to devops-homework
+88s         Normal    ScalingReplicaSet   deployment/canary-stable                Scaled up replica set canary-stable-5bb8587d4c from 0 to 3
+88s         Normal    SuccessfulCreate    replicaset/canary-stable-5bb8587d4c     Created pod: canary-stable-5bb8587d4c-77zgm
+88s         Normal    SuccessfulCreate    replicaset/recreate-6548599f4           Created pod: recreate-6548599f4-zcgqt
+88s         Normal    SuccessfulCreate    replicaset/recreate-6548599f4           Created pod: recreate-6548599f4-wmlbt
+88s         Normal    SuccessfulCreate    replicaset/bluegreen-green-6ffd9b6c88   Created pod: bluegreen-green-6ffd9b6c88-rkl42
+88s         Normal    ScalingReplicaSet   deployment/bluegreen-green              Scaled up replica set bluegreen-green-6ffd9b6c88 from 0 to 1
+88s         Normal    Scheduled           pod/canary-preview-b956f6f55-76c6k      Successfully assigned hw-workloads/canary-preview-b956f6f55-76c6k to devops-homework
+88s         Normal    SuccessfulCreate    replicaset/canary-stable-5bb8587d4c     Created pod: canary-stable-5bb8587d4c-b6dgh
+88s         Normal    ScalingReplicaSet   deployment/recreate                     Scaled up replica set recreate-6548599f4 from 0 to 2
+88s         Normal    Scheduled           pod/replicaset-demo-mnvc9               Successfully assigned hw-workloads/replicaset-demo-mnvc9 to devops-homework
+88s         Normal    Scheduled           pod/rolling-5f77799696-v779c            Successfully assigned hw-workloads/rolling-5f77799696-v779c to devops-homework
+88s         Normal    Scheduled           pod/canary-stable-5bb8587d4c-pksz7      Successfully assigned hw-workloads/canary-stable-5bb8587d4c-pksz7 to devops-homework
+88s         Normal    Scheduled           pod/rolling-5f77799696-flh4s            Successfully assigned hw-workloads/rolling-5f77799696-flh4s to devops-homework
+88s         Normal    ScalingReplicaSet   deployment/rolling                      Scaled up replica set rolling-5f77799696 from 0 to 2
+88s         Normal    Scheduled           pod/recreate-6548599f4-wmlbt            Successfully assigned hw-workloads/recreate-6548599f4-wmlbt to devops-homework
+88s         Normal    Scheduled           pod/bluegreen-blue-5dfd5567f6-24v62     Successfully assigned hw-workloads/bluegreen-blue-5dfd5567f6-24v62 to devops-homework
+88s         Normal    Scheduled           pod/canary-stable-5bb8587d4c-b6dgh      Successfully assigned hw-workloads/canary-stable-5bb8587d4c-b6dgh to devops-homework
+87s         Normal    Pulling             pod/replicaset-demo-mnvc9               Pulling image "nginx:1.27-alpine"
+87s         Normal    Pulling             pod/rolling-5f77799696-flh4s            Pulling image "nginx:1.27-alpine"
+87s         Normal    Pulling             pod/canary-stable-5bb8587d4c-b6dgh      Pulling image "nginx:1.27-alpine"
+88s         Normal    SuccessfulCreate    replicaset/replicaset-demo              Created pod: replicaset-demo-mnvc9
+87s         Normal    SuccessfulCreate    replicaset/replicaset-demo              Created pod: replicaset-demo-rfh25
+87s         Normal    Pulling             pod/bluegreen-blue-5dfd5567f6-24v62     Pulling image "nginx:1.27-alpine"
+88s         Normal    SuccessfulCreate    replicaset/canary-preview-b956f6f55     Created pod: canary-preview-b956f6f55-76c6k
+87s         Normal    Pulling             pod/replicaset-demo-rfh25               Pulling image "nginx:1.27-alpine"
+87s         Normal    Scheduled           pod/replicaset-demo-rfh25               Successfully assigned hw-workloads/replicaset-demo-rfh25 to devops-homework
+87s         Normal    Pulling             pod/rolling-5f77799696-v779c            Pulling image "nginx:1.27-alpine"
+87s         Normal    Pulling             pod/canary-stable-5bb8587d4c-pksz7      Pulling image "nginx:1.27-alpine"
+87s         Normal    Pulling             pod/canary-preview-b956f6f55-76c6k      Pulling image "nginx:1.27-alpine"
+87s         Normal    Pulling             pod/recreate-6548599f4-zcgqt            Pulling image "nginx:1.27-alpine"
+88s         Normal    SuccessfulCreate    replicaset/canary-stable-5bb8587d4c     Created pod: canary-stable-5bb8587d4c-pksz7
+87s         Normal    Pulling             pod/bluegreen-green-6ffd9b6c88-rkl42    Pulling image "nginx:1.27-alpine"
+87s         Normal    Pulling             pod/recreate-6548599f4-wmlbt            Pulling image "nginx:1.27-alpine"
+87s         Normal    Pulling             pod/canary-stable-5bb8587d4c-77zgm      Pulling image "nginx:1.27-alpine"
+84s         Normal    Scheduled           pod/lifecycle-multi-container           Successfully assigned hw-workloads/lifecycle-multi-container to devops-homework
+5s          Normal    Pulling             pod/lifecycle-image-error               Pulling image "busybox:homework-intentionally-missing-tag"
+84s         Normal    Scheduled           pod/lifecycle-succeeded                 Successfully assigned hw-workloads/lifecycle-succeeded to devops-homework
+84s         Normal    Scheduled           pod/lifecycle-termination               Successfully assigned hw-workloads/lifecycle-termination to devops-homework
+84s         Normal    Pulling             pod/lifecycle-crashloop                 Pulling image "busybox:1.36"
+84s         Normal    Scheduled           pod/lifecycle-failed                    Successfully assigned hw-workloads/lifecycle-failed to devops-homework
+84s         Normal    Pulling             pod/lifecycle-failed                    Pulling image "busybox:1.36"
+84s         Normal    Scheduled           pod/lifecycle-crashloop                 Successfully assigned hw-workloads/lifecycle-crashloop to devops-homework
+84s         Normal    Scheduled           pod/lifecycle-running                   Successfully assigned hw-workloads/lifecycle-running to devops-homework
+84s         Normal    Pulling             pod/lifecycle-multi-container           Pulling image "busybox:1.36"
+84s         Normal    Scheduled           pod/lifecycle-image-error               Successfully assigned hw-workloads/lifecycle-image-error to devops-homework
+84s         Warning   FailedScheduling    pod/lifecycle-pending                   0/1 nodes are available: 1 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.
+84s         Normal    Pulling             pod/lifecycle-succeeded                 Pulling image "busybox:1.36"
+84s         Normal    Pulling             pod/lifecycle-termination               Pulling image "busybox:1.36"
+84s         Normal    Scheduled           pod/lifecycle-startup                   Successfully assigned hw-workloads/lifecycle-startup to devops-homework
+84s         Normal    Pulling             pod/lifecycle-running                   Pulling image "busybox:1.36"
+84s         Normal    Scheduled           pod/lifecycle-init                      Successfully assigned hw-workloads/lifecycle-init to devops-homework
+84s         Normal    Pulling             pod/lifecycle-init                      Pulling image "busybox:1.36"
+84s         Normal    Pulling             pod/lifecycle-startup                   Pulling image "busybox:1.36"
+84s         Normal    Pulling             pod/lifecycle-liveness                  Pulling image "busybox:1.36"
+84s         Normal    Scheduled           pod/lifecycle-liveness                  Successfully assigned hw-workloads/lifecycle-liveness to devops-homework
+84s         Normal    Pulling             pod/lifecycle-readiness                 Pulling image "busybox:1.36"
+84s         Normal    Scheduled           pod/lifecycle-readiness                 Successfully assigned hw-workloads/lifecycle-readiness to devops-homework
+60s         Normal    Started             pod/rolling-5f77799696-flh4s            Container started
+60s         Normal    Pulled              pod/rolling-5f77799696-flh4s            Successfully pulled image "nginx:1.27-alpine" in 11.043s (27.155s including waiting). Image size: 21832241 bytes.
+60s         Normal    Created             pod/rolling-5f77799696-flh4s            Container created
+58s         Normal    Pulled              pod/rolling-5f77799696-v779c            Successfully pulled image "nginx:1.27-alpine" in 1.915s (29.069s including waiting). Image size: 21832241 bytes.
+58s         Normal    Created             pod/rolling-5f77799696-v779c            Container created
+58s         Normal    Started             pod/rolling-5f77799696-v779c            Container started
+56s         Normal    Created             pod/recreate-6548599f4-zcgqt            Container created
+56s         Normal    Pulled              pod/recreate-6548599f4-zcgqt            Successfully pulled image "nginx:1.27-alpine" in 2.092s (31.16s including waiting). Image size: 21832241 bytes.
+56s         Normal    Started             pod/recreate-6548599f4-zcgqt            Container started
+54s         Normal    Created             pod/recreate-6548599f4-wmlbt            Container created
+54s         Normal    Started             pod/recreate-6548599f4-wmlbt            Container started
+54s         Normal    Pulled              pod/recreate-6548599f4-wmlbt            Successfully pulled image "nginx:1.27-alpine" in 2.126s (33.264s including waiting). Image size: 21832241 bytes.
+52s         Normal    Created             pod/bluegreen-blue-5dfd5567f6-24v62     Container created
+52s         Normal    Pulled              pod/bluegreen-blue-5dfd5567f6-24v62     Successfully pulled image "nginx:1.27-alpine" in 1.879s (35.14s including waiting). Image size: 21832241 bytes.
+52s         Normal    Started             pod/bluegreen-blue-5dfd5567f6-24v62     Container started
+50s         Normal    Started             pod/bluegreen-green-6ffd9b6c88-rkl42    Container started
+50s         Normal    Created             pod/bluegreen-green-6ffd9b6c88-rkl42    Container created
+50s         Normal    Pulled              pod/bluegreen-green-6ffd9b6c88-rkl42    Successfully pulled image "nginx:1.27-alpine" in 1.898s (37.034s including waiting). Image size: 21832241 bytes.
+48s         Normal    Pulled              pod/canary-stable-5bb8587d4c-b6dgh      Successfully pulled image "nginx:1.27-alpine" in 1.902s (38.929s including waiting). Image size: 21832241 bytes.
+48s         Normal    Created             pod/canary-stable-5bb8587d4c-b6dgh      Container created
+48s         Normal    Started             pod/canary-stable-5bb8587d4c-b6dgh      Container started
+47s         Normal    Created             pod/canary-stable-5bb8587d4c-77zgm      Container created
+47s         Normal    Pulled              pod/canary-stable-5bb8587d4c-77zgm      Successfully pulled image "nginx:1.27-alpine" in 1.773s (40.699s including waiting). Image size: 21832241 bytes.
+47s         Normal    Started             pod/canary-stable-5bb8587d4c-77zgm      Container started
+45s         Normal    Pulled              pod/canary-stable-5bb8587d4c-pksz7      Successfully pulled image "nginx:1.27-alpine" in 1.951s (42.649s including waiting). Image size: 21832241 bytes.
+45s         Normal    Created             pod/canary-stable-5bb8587d4c-pksz7      Container created
+45s         Normal    Started             pod/canary-stable-5bb8587d4c-pksz7      Container started
+43s         Normal    Pulled              pod/canary-preview-b956f6f55-76c6k      Successfully pulled image "nginx:1.27-alpine" in 1.926s (44.459s including waiting). Image size: 21832241 bytes.
+43s         Normal    Created             pod/canary-preview-b956f6f55-76c6k      Container created
+43s         Normal    Started             pod/canary-preview-b956f6f55-76c6k      Container started
+42s         Normal    ScalingReplicaSet   deployment/rolling                      Scaled up replica set rolling-854774b99c from 0 to 1
+42s         Normal    Scheduled           pod/rolling-854774b99c-lf6px            Successfully assigned hw-workloads/rolling-854774b99c-lf6px to devops-homework
+42s         Normal    SuccessfulCreate    replicaset/rolling-854774b99c           Created pod: rolling-854774b99c-lf6px
+41s         Normal    Pulled              pod/replicaset-demo-mnvc9               Successfully pulled image "nginx:1.27-alpine" in 1.627s (45.965s including waiting). Image size: 21832241 bytes.
+41s         Normal    Killing             pod/rolling-5f77799696-v779c            Stopping container web
+41s         Normal    Started             pod/replicaset-demo-mnvc9               Container started
+41s         Normal    Pulled              pod/rolling-854774b99c-lf6px            Container image "nginx:1.27-alpine" already present on machine and can be accessed by the pod
+41s         Normal    Created             pod/rolling-854774b99c-lf6px            Container created
+41s         Normal    Started             pod/rolling-854774b99c-lf6px            Container started
+41s         Normal    Scheduled           pod/rolling-854774b99c-wkwnk            Successfully assigned hw-workloads/rolling-854774b99c-wkwnk to devops-homework
+41s         Normal    ScalingReplicaSet   deployment/rolling                      Scaled up replica set rolling-854774b99c from 1 to 2
+41s         Normal    ScalingReplicaSet   deployment/rolling                      Scaled down replica set rolling-5f77799696 from 2 to 1
+41s         Normal    SuccessfulDelete    replicaset/rolling-5f77799696           Deleted pod: rolling-5f77799696-v779c
+41s         Normal    SuccessfulCreate    replicaset/rolling-854774b99c           Created pod: rolling-854774b99c-wkwnk
+41s         Normal    Created             pod/replicaset-demo-mnvc9               Container created
+40s         Normal    ScalingReplicaSet   deployment/rolling                      Scaled down replica set rolling-5f77799696 from 1 to 0
+40s         Normal    Killing             pod/rolling-5f77799696-flh4s            Stopping container web
+40s         Normal    Created             pod/replicaset-demo-rfh25               Container created
+40s         Normal    Started             pod/rolling-854774b99c-wkwnk            Container started
+40s         Normal    Created             pod/rolling-854774b99c-wkwnk            Container created
+40s         Normal    Pulled              pod/rolling-854774b99c-wkwnk            Container image "nginx:1.27-alpine" already present on machine and can be accessed by the pod
+40s         Normal    SuccessfulDelete    replicaset/rolling-5f77799696           Deleted pod: rolling-5f77799696-flh4s
+40s         Normal    Pulled              pod/replicaset-demo-rfh25               Successfully pulled image "nginx:1.27-alpine" in 1.675s (47.445s including waiting). Image size: 21832241 bytes.
+39s         Normal    Started             pod/replicaset-demo-rfh25               Container started
+39s         Normal    Scheduled           pod/strategy-client                     Successfully assigned hw-workloads/strategy-client to devops-homework
+39s         Normal    Pulling             pod/strategy-client                     Pulling image "busybox:1.36"
+26s         Normal    Started             pod/lifecycle-running                   Container started
+26s         Normal    Created             pod/lifecycle-running                   Container created
+26s         Normal    Pulled              pod/lifecycle-running                   Successfully pulled image "busybox:1.36" in 1.661s (58.514s including waiting). Image size: 1906887 bytes.
+24s         Normal    Created             pod/lifecycle-succeeded                 Container created
+24s         Normal    Pulled              pod/lifecycle-succeeded                 Successfully pulled image "busybox:1.36" in 1.772s (1m0.271s including waiting). Image size: 1906887 bytes.
+24s         Normal    Started             pod/lifecycle-succeeded                 Container started
+22s         Normal    Pulled              pod/lifecycle-failed                    Successfully pulled image "busybox:1.36" in 2.131s (1m2.4s including waiting). Image size: 1906887 bytes.
+22s         Normal    Created             pod/lifecycle-failed                    Container created
+22s         Normal    Started             pod/lifecycle-failed                    Container started
+5s          Normal    Created             pod/lifecycle-crashloop                 Container created
+20s         Normal    Pulled              pod/lifecycle-crashloop                 Successfully pulled image "busybox:1.36" in 1.984s (1m4.35s including waiting). Image size: 1906887 bytes.
+5s          Normal    Started             pod/lifecycle-crashloop                 Container started
+5s          Normal    Pulled              pod/lifecycle-crashloop                 Container image "busybox:1.36" already present on machine and can be accessed by the pod
+1s          Warning   Failed              pod/lifecycle-image-error               Error: ErrImagePull
+1s          Warning   Failed              pod/lifecycle-image-error               Failed to pull image "busybox:homework-intentionally-missing-tag": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/busybox:homework-intentionally-missing-tag": failed to resolve reference "docker.io/library/busybox:homework-intentionally-missing-tag": docker.io/library/busybox:homework-intentionally-missing-tag: not found
+17s         Normal    BackOff             pod/lifecycle-image-error               Back-off pulling image "busybox:homework-intentionally-missing-tag"
+17s         Warning   Failed              pod/lifecycle-image-error               Error: ImagePullBackOff
+4s          Warning   BackOff             pod/lifecycle-crashloop                 Back-off restarting failed container app in pod lifecycle-crashloop_hw-workloads(40479300-69dc-499a-bdbb-b1e5b1420b25)
+16s         Normal    Created             pod/lifecycle-liveness                  Container created
+16s         Normal    Pulled              pod/lifecycle-liveness                  Successfully pulled image "busybox:1.36" in 1.76s (1m7.934s including waiting). Image size: 1906887 bytes.
+16s         Normal    Started             pod/lifecycle-liveness                  Container started
+14s         Normal    Started             pod/lifecycle-readiness                 Container started
+14s         Normal    Pulled              pod/lifecycle-readiness                 Successfully pulled image "busybox:1.36" in 1.677s (1m9.61s including waiting). Image size: 1906887 bytes.
+14s         Normal    Created             pod/lifecycle-readiness                 Container created
+0s          Warning   Unhealthy           pod/lifecycle-readiness                 Readiness probe failed:
+12s         Normal    Started             pod/lifecycle-startup                   Container started
+12s         Normal    Pulled              pod/lifecycle-startup                   Successfully pulled image "busybox:1.36" in 2.147s (1m11.72s including waiting). Image size: 1906887 bytes.
+12s         Normal    Created             pod/lifecycle-startup                   Container created
+2s          Warning   Unhealthy           pod/lifecycle-startup                   Startup probe failed:
+10s         Normal    Started             pod/lifecycle-termination               Container started
+10s         Normal    Pulled              pod/lifecycle-termination               Successfully pulled image "busybox:1.36" in 1.928s (1m13.646s including waiting). Image size: 1906887 bytes.
+10s         Normal    Created             pod/lifecycle-termination               Container created
+9s          Normal    Created             pod/lifecycle-multi-container           Container created
+9s          Normal    Pulled              pod/lifecycle-multi-container           Successfully pulled image "busybox:1.36" in 1.767s (1m15.414s including waiting). Image size: 1906887 bytes.
+8s          Normal    Started             pod/lifecycle-multi-container           Container started
+8s          Normal    Pulled              pod/lifecycle-multi-container           Container image "busybox:1.36" already present on machine and can be accessed by the pod
+8s          Normal    Started             pod/lifecycle-multi-container           Container started
+8s          Normal    Created             pod/lifecycle-multi-container           Container created
+7s          Normal    Pulled              pod/lifecycle-init                      Successfully pulled image "busybox:1.36" in 1.648s (1m17.06s including waiting). Image size: 1906887 bytes.
+7s          Normal    Created             pod/lifecycle-init                      Container created
+7s          Normal    Started             pod/lifecycle-init                      Container started
+5s          Normal    Pulled              pod/strategy-client                     Successfully pulled image "busybox:1.36" in 1.777s (33.974s including waiting). Image size: 1906887 bytes.
+5s          Normal    Created             pod/strategy-client                     Container created
+5s          Normal    Started             pod/strategy-client                     Container started
+3s          Normal    Scheduled           pod/recreate-9d7fccdc7-dxkk8            Successfully assigned hw-workloads/recreate-9d7fccdc7-dxkk8 to devops-homework
+3s          Normal    Pulled              pod/recreate-9d7fccdc7-xsds9            Container image "nginx:1.27-alpine" already present on machine and can be accessed by the pod
+3s          Normal    Killing             pod/recreate-6548599f4-zcgqt            Stopping container web
+3s          Normal    SuccessfulDelete    replicaset/recreate-6548599f4           Deleted pod: recreate-6548599f4-wmlbt
+3s          Normal    Pulled              pod/recreate-9d7fccdc7-dxkk8            Container image "nginx:1.27-alpine" already present on machine and can be accessed by the pod
+3s          Normal    Created             pod/recreate-9d7fccdc7-dxkk8            Container created
+3s          Normal    Started             pod/recreate-9d7fccdc7-dxkk8            Container started
+3s          Normal    Scheduled           pod/recreate-9d7fccdc7-xsds9            Successfully assigned hw-workloads/recreate-9d7fccdc7-xsds9 to devops-homework
+3s          Normal    Killing             pod/recreate-6548599f4-wmlbt            Stopping container web
+3s          Normal    SuccessfulDelete    replicaset/recreate-6548599f4           Deleted pod: recreate-6548599f4-zcgqt
+3s          Normal    Created             pod/recreate-9d7fccdc7-xsds9            Container created
+3s          Normal    Started             pod/recreate-9d7fccdc7-xsds9            Container started
+3s          Normal    SuccessfulCreate    replicaset/recreate-9d7fccdc7           Created pod: recreate-9d7fccdc7-dxkk8
+3s          Normal    SuccessfulCreate    replicaset/recreate-9d7fccdc7           Created pod: recreate-9d7fccdc7-xsds9
+3s          Normal    ScalingReplicaSet   deployment/recreate                     Scaled up replica set recreate-9d7fccdc7 from 0 to 2
+3s          Normal    ScalingReplicaSet   deployment/recreate                     Scaled down replica set recreate-6548599f4 from 2 to 0
+1s          Normal    Started             pod/lifecycle-init                      Container started
+1s          Normal    Created             pod/lifecycle-init                      Container created
+1s          Normal    Pulled              pod/lifecycle-init                      Container image "busybox:1.36" already present on machine and can be accessed by the pod
+pod "strategy-client" deleted from hw-workloads namespace

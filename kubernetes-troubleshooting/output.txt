@@ -1,0 +1,749 @@
++ kubectl config use-context devops-homework
+Switched to context "devops-homework".
++ kubectl apply -f kubernetes-troubleshooting/namespace.yaml
+namespace/hw-troubleshooting created
++ kubectl apply -f kubernetes-troubleshooting/broken/
+pod/configuration created
+pod/crash created
+pod/dns created
+pod/image created
+pod/pending created
+pod/volume created
++ sleep 30
++ kubectl -n hw-troubleshooting get pods -o wide
+NAME            READY   STATUS                       RESTARTS      AGE   IP            NODE              NOMINATED NODE   READINESS GATES
+configuration   0/1     CreateContainerConfigError   0             30s   10.244.0.53   devops-homework   <none>           <none>
+crash           0/1     Error                        2 (30s ago)   30s   10.244.0.52   devops-homework   <none>           <none>
+dns             1/1     Running                      0             30s   10.244.0.54   devops-homework   <none>           <none>
+image           0/1     ErrImagePull                 0             30s   10.244.0.55   devops-homework   <none>           <none>
+pending         0/1     Pending                      0             30s   <none>        <none>            <none>           <none>
+volume          0/1     ContainerCreating            0             30s   <none>        devops-homework   <none>           <none>
++ for name in crash image pending configuration volume dns
++ kubectl -n hw-troubleshooting describe pod crash
+Name:             crash
+Namespace:        hw-troubleshooting
+Priority:         0
+Service Account:  default
+Node:             devops-homework/192.168.49.2
+Start Time:       Wed, 07 Oct 2026 20:03:42 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.52
+IPs:
+  IP:  10.244.0.52
+Containers:
+  app:
+    Container ID:  containerd://26f1ada4a7446d0c0e8ae55bfbdbd2c6defd81f62a6c0e91082d2ab1253f18b0
+    Image:         busybox:1.37
+    Image ID:      docker.io/library/busybox@sha256:bdf57e528e45e4433820e045b29b4597825a1c9e38353532d90a01445013f82e
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      echo deliberate application failure; exit 1
+    State:          Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Wed, 07 Oct 2026 20:03:58 +0530
+      Finished:     Wed, 07 Oct 2026 20:03:58 +0530
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Wed, 07 Oct 2026 20:03:42 +0530
+      Finished:     Wed, 07 Oct 2026 20:03:42 +0530
+    Ready:          False
+    Restart Count:  2
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-tw9lx (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-tw9lx:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                From               Message
+  ----     ------     ----               ----               -------
+  Normal   Scheduled  30s                default-scheduler  Successfully assigned hw-troubleshooting/crash to devops-homework
+  Normal   Pulled     14s (x3 over 30s)  kubelet            spec.containers{app}: Container image "busybox:1.37" already present on machine and can be accessed by the pod
+  Normal   Created    14s (x3 over 30s)  kubelet            spec.containers{app}: Container created
+  Normal   Started    14s (x3 over 30s)  kubelet            spec.containers{app}: Container started
+  Warning  BackOff    13s (x2 over 29s)  kubelet            spec.containers{app}: Back-off restarting failed container app in pod crash_hw-troubleshooting(52e081ac-80ed-49c8-95a7-3f538663728e)
++ for name in crash image pending configuration volume dns
++ kubectl -n hw-troubleshooting describe pod image
+Name:             image
+Namespace:        hw-troubleshooting
+Priority:         0
+Service Account:  default
+Node:             devops-homework/192.168.49.2
+Start Time:       Wed, 07 Oct 2026 20:03:42 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Pending
+IP:               10.244.0.55
+IPs:
+  IP:  10.244.0.55
+Containers:
+  app:
+    Container ID:  
+    Image:         busybox:homework-nonexistent
+    Image ID:      
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sleep
+      3600
+    State:          Waiting
+      Reason:       ErrImagePull
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-bmstg (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-bmstg:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age   From               Message
+  ----     ------     ----  ----               -------
+  Normal   Scheduled  30s   default-scheduler  Successfully assigned hw-troubleshooting/image to devops-homework
+  Normal   Pulling    30s   kubelet            spec.containers{app}: Pulling image "busybox:homework-nonexistent"
+  Warning  Failed     7s    kubelet            spec.containers{app}: Failed to pull image "busybox:homework-nonexistent": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/busybox:homework-nonexistent": failed to resolve reference "docker.io/library/busybox:homework-nonexistent": docker.io/library/busybox:homework-nonexistent: not found
+  Warning  Failed     7s    kubelet            spec.containers{app}: Error: ErrImagePull
+  Normal   BackOff    6s    kubelet            spec.containers{app}: Back-off pulling image "busybox:homework-nonexistent"
+  Warning  Failed     6s    kubelet            spec.containers{app}: Error: ImagePullBackOff
++ for name in crash image pending configuration volume dns
++ kubectl -n hw-troubleshooting describe pod pending
+Name:             pending
+Namespace:        hw-troubleshooting
+Priority:         0
+Service Account:  default
+Node:             <none>
+Labels:           <none>
+Annotations:      <none>
+Status:           Pending
+IP:               
+IPs:              <none>
+Containers:
+  app:
+    Image:      busybox:1.37
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      sleep
+      3600
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-pqhsp (ro)
+Conditions:
+  Type           Status
+  PodScheduled   False 
+Volumes:
+  kube-api-access-pqhsp:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              homework-node=missing
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age   From               Message
+  ----     ------            ----  ----               -------
+  Warning  FailedScheduling  30s   default-scheduler  0/1 nodes are available: 1 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.
++ for name in crash image pending configuration volume dns
++ kubectl -n hw-troubleshooting describe pod configuration
+Name:             configuration
+Namespace:        hw-troubleshooting
+Priority:         0
+Service Account:  default
+Node:             devops-homework/192.168.49.2
+Start Time:       Wed, 07 Oct 2026 20:03:42 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Pending
+IP:               10.244.0.53
+IPs:
+  IP:  10.244.0.53
+Containers:
+  app:
+    Container ID:  
+    Image:         busybox:1.37
+    Image ID:      
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sleep
+      3600
+    State:          Waiting
+      Reason:       CreateContainerConfigError
+    Ready:          False
+    Restart Count:  0
+    Environment Variables from:
+      missing-settings  ConfigMap  Optional: false
+    Environment:        <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-hn7hr (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-hn7hr:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                From               Message
+  ----     ------     ----               ----               -------
+  Normal   Scheduled  30s                default-scheduler  Successfully assigned hw-troubleshooting/configuration to devops-homework
+  Normal   Pulled     14s (x3 over 30s)  kubelet            spec.containers{app}: Container image "busybox:1.37" already present on machine and can be accessed by the pod
+  Warning  Failed     14s (x3 over 30s)  kubelet            spec.containers{app}: Error: configmap "missing-settings" not found
++ for name in crash image pending configuration volume dns
++ kubectl -n hw-troubleshooting describe pod volume
+Name:             volume
+Namespace:        hw-troubleshooting
+Priority:         0
+Service Account:  default
+Node:             devops-homework/192.168.49.2
+Start Time:       Wed, 07 Oct 2026 20:03:42 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Pending
+IP:               
+IPs:              <none>
+Containers:
+  app:
+    Container ID:  
+    Image:         busybox:1.37
+    Image ID:      
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sleep
+      3600
+    State:          Waiting
+      Reason:       ContainerCreating
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /settings from settings (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-ccpmb (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  settings:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      missing-volume
+    Optional:  false
+  kube-api-access-ccpmb:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason       Age                From               Message
+  ----     ------       ----               ----               -------
+  Normal   Scheduled    30s                default-scheduler  Successfully assigned hw-troubleshooting/volume to devops-homework
+  Warning  FailedMount  15s (x6 over 30s)  kubelet            MountVolume.SetUp failed for volume "settings" : configmap "missing-volume" not found
++ for name in crash image pending configuration volume dns
++ kubectl -n hw-troubleshooting describe pod dns
+Name:             dns
+Namespace:        hw-troubleshooting
+Priority:         0
+Service Account:  default
+Node:             devops-homework/192.168.49.2
+Start Time:       Wed, 07 Oct 2026 20:03:42 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.54
+IPs:
+  IP:  10.244.0.54
+Containers:
+  app:
+    Container ID:  containerd://3f79c334745a67d068a2303ead2cb98053b71251fc93cf7fcff3c8349c14f240
+    Image:         busybox:1.37
+    Image ID:      docker.io/library/busybox@sha256:bdf57e528e45e4433820e045b29b4597825a1c9e38353532d90a01445013f82e
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sleep
+      3600
+    State:          Running
+      Started:      Wed, 07 Oct 2026 20:03:42 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-4dlzp (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-4dlzp:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  30s   default-scheduler  Successfully assigned hw-troubleshooting/dns to devops-homework
+  Normal  Pulled     30s   kubelet            spec.containers{app}: Container image "busybox:1.37" already present on machine and can be accessed by the pod
+  Normal  Created    30s   kubelet            spec.containers{app}: Container created
+  Normal  Started    30s   kubelet            spec.containers{app}: Container started
++ kubectl -n hw-troubleshooting logs crash
+deliberate application failure
++ kubectl -n hw-troubleshooting exec dns -- nslookup -timeout=2 kubernetes.default.svc.cluster.local
+;; connection timed out; no servers could be reached
+
+command terminated with exit code 1
++ true
++ kubectl -n hw-troubleshooting events
+LAST SEEN           TYPE      REASON             OBJECT              MESSAGE
+32s                 Normal    Created            Pod/dns             Container created
+32s                 Normal    Scheduled          Pod/volume          Successfully assigned hw-troubleshooting/volume to devops-homework
+32s                 Warning   FailedScheduling   Pod/pending         0/1 nodes are available: 1 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.
+32s                 Normal    Scheduled          Pod/crash           Successfully assigned hw-troubleshooting/crash to devops-homework
+32s                 Normal    Pulling            Pod/image           Pulling image "busybox:homework-nonexistent"
+32s                 Normal    Scheduled          Pod/configuration   Successfully assigned hw-troubleshooting/configuration to devops-homework
+32s                 Normal    Scheduled          Pod/image           Successfully assigned hw-troubleshooting/image to devops-homework
+32s                 Normal    Started            Pod/dns             Container started
+32s                 Normal    Scheduled          Pod/dns             Successfully assigned hw-troubleshooting/dns to devops-homework
+32s                 Normal    Pulled             Pod/dns             Container image "busybox:1.37" already present on machine and can be accessed by the pod
+16s (x3 over 32s)   Normal    Created            Pod/crash           Container created
+16s (x3 over 32s)   Normal    Started            Pod/crash           Container started
+16s (x3 over 32s)   Normal    Pulled             Pod/crash           Container image "busybox:1.37" already present on machine and can be accessed by the pod
+15s (x2 over 31s)   Warning   BackOff            Pod/crash           Back-off restarting failed container app in pod crash_hw-troubleshooting(52e081ac-80ed-49c8-95a7-3f538663728e)
+9s                  Warning   Failed             Pod/image           Failed to pull image "busybox:homework-nonexistent": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/busybox:homework-nonexistent": failed to resolve reference "docker.io/library/busybox:homework-nonexistent": docker.io/library/busybox:homework-nonexistent: not found
+9s                  Warning   Failed             Pod/image           Error: ErrImagePull
+8s                  Normal    BackOff            Pod/image           Back-off pulling image "busybox:homework-nonexistent"
+8s                  Warning   Failed             Pod/image           Error: ImagePullBackOff
+1s (x4 over 32s)    Warning   Failed             Pod/configuration   Error: configmap "missing-settings" not found
+1s (x4 over 32s)    Normal    Pulled             Pod/configuration   Container image "busybox:1.37" already present on machine and can be accessed by the pod
+1s (x7 over 32s)    Warning   FailedMount        Pod/volume          MountVolume.SetUp failed for volume "settings" : configmap "missing-volume" not found
++ kubectl explain pod.spec.containers
+KIND:       Pod
+VERSION:    v1
+
+FIELD: containers <[]Container>
+
+
+DESCRIPTION:
+    List of containers belonging to the pod. Containers cannot currently be
+    added or removed. There must be at least one container in a Pod. Cannot be
+    updated.
+    A single application container that you want to run within a pod.
+    
+FIELDS:
+  args	<[]string>
+    Arguments to the entrypoint. The container image's CMD is used if this is
+    not provided. Variable references $(VAR_NAME) are expanded using the
+    container's environment. If a variable cannot be resolved, the reference in
+    the input string will be unchanged. Double $$ are reduced to a single $,
+    which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will
+    produce the string literal "$(VAR_NAME)". Escaped references will never be
+    expanded, regardless of whether the variable exists or not. Cannot be
+    updated. More info:
+    https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+  command	<[]string>
+    Entrypoint array. Not executed within a shell. The container image's
+    ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME)
+    are expanded using the container's environment. If a variable cannot be
+    resolved, the reference in the input string will be unchanged. Double $$ are
+    reduced to a single $, which allows for escaping the $(VAR_NAME) syntax:
+    i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped
+    references will never be expanded, regardless of whether the variable exists
+    or not. Cannot be updated. More info:
+    https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+
+  env	<[]EnvVar>
+    List of environment variables to set in the container. Cannot be updated.
+
+  envFrom	<[]EnvFromSource>
+    List of sources to populate environment variables in the container. The keys
+    defined within a source may consist of any printable ASCII characters except
+    '='. When a key exists in multiple sources, the value associated with the
+    last source will take precedence. Values defined by an Env with a duplicate
+    key will take precedence. Cannot be updated.
+
+  image	<string>
+    Container image name. More info:
+    https://kubernetes.io/docs/concepts/containers/images This field is optional
+    to allow higher level config management to default or override container
+    images in workload controllers like Deployments and StatefulSets.
+
+  imagePullPolicy	<string>
+  enum: Always, IfNotPresent, Never
+    Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if
+    :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More
+    info: https://kubernetes.io/docs/concepts/containers/images#updating-images
+    
+    Possible enum values:
+     - `"Always"` means that kubelet always attempts to pull the latest image.
+    Container will fail If the pull fails.
+     - `"IfNotPresent"` means that kubelet pulls if the image isn't present on
+    disk. Container will fail if the image isn't present and the pull fails.
+     - `"Never"` means that kubelet never pulls an image, but only uses a local
+    image. Container will fail if the image isn't present
+
+  lifecycle	<Lifecycle>
+    Actions that the management system should take in response to container
+    lifecycle events. Cannot be updated.
+
+  livenessProbe	<Probe>
+    Periodic probe of container liveness. Container will be restarted if the
+    probe fails. Cannot be updated. More info:
+    https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+  name	<string> -required-
+    Name of the container specified as a DNS_LABEL. Each container in a pod must
+    have a unique name (DNS_LABEL). Cannot be updated.
+
+  ports	<[]ContainerPort>
+    List of ports to expose from the container. Not specifying a port here DOES
+    NOT prevent that port from being exposed. Any port which is listening on the
+    default "0.0.0.0" address inside a container will be accessible from the
+    network. Modifying this array with strategic merge patch may corrupt the
+    data. For more information See
+    https://github.com/kubernetes/kubernetes/issues/108255. Cannot be updated.
+
+  readinessProbe	<Probe>
+    Periodic probe of container service readiness. Container will be removed
+    from service endpoints if the probe fails. Cannot be updated. More info:
+    https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+  resizePolicy	<[]ContainerResizePolicy>
+    Resources resize policy for the container. This field cannot be set on
+    ephemeral containers.
+
+  resources	<ResourceRequirements>
+    Compute Resources required by this container. Cannot be updated. More info:
+    https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+  restartPolicy	<string>
+    RestartPolicy defines the restart behavior of individual containers in a
+    pod. This overrides the pod-level restart policy. When this field is not
+    specified, the restart behavior is defined by the Pod's restart policy and
+    the container type. Additionally, setting the RestartPolicy as "Always" for
+    the init container will have the following effect: this init container will
+    be continually restarted on exit until all regular containers have
+    terminated. Once all regular containers have completed, all init containers
+    with restartPolicy "Always" will be shut down. This lifecycle differs from
+    normal init containers and is often referred to as a "sidecar" container.
+    Although this init container still starts in the init container sequence, it
+    does not wait for the container to complete before proceeding to the next
+    init container. Instead, the next init container starts immediately after
+    this init container is started, or after any startupProbe has successfully
+    completed.
+
+  restartPolicyRules	<[]ContainerRestartRule>
+    Represents a list of rules to be checked to determine if the container
+    should be restarted on exit. The rules are evaluated in order. Once a rule
+    matches a container exit condition, the remaining rules are ignored. If no
+    rule matches the container exit condition, the Container-level restart
+    policy determines the whether the container is restarted or not. Constraints
+    on the rules: - At most 20 rules are allowed. - Rules can have the same
+    action. - Identical rules are not forbidden in validations. When rules are
+    specified, container MUST set RestartPolicy explicitly even it if matches
+    the Pod's RestartPolicy.
+
+  securityContext	<SecurityContext>
+    SecurityContext defines the security options the container should be run
+    with. If set, the fields of SecurityContext override the equivalent fields
+    of PodSecurityContext. More info:
+    https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+
+  startupProbe	<Probe>
+    StartupProbe indicates that the Pod has successfully initialized. If
+    specified, no other probes are executed until this completes successfully.
+    If this probe fails, the Pod will be restarted, just as if the livenessProbe
+    failed. This can be used to provide different probe parameters at the
+    beginning of a Pod's lifecycle, when it might take a long time to load data
+    or warm a cache, than during steady-state operation. This cannot be updated.
+    More info:
+    https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+
+  stdin	<boolean>
+    Whether this container should allocate a buffer for stdin in the container
+    runtime. If this is not set, reads from stdin in the container will always
+    result in EOF. Default is false.
+
+  stdinOnce	<boolean>
+    Whether the container runtime should close the stdin channel after it has
+    been opened by a single attach. When stdin is true the stdin stream will
+    remain open across multiple attach sessions. If stdinOnce is set to true,
+    stdin is opened on container start, is empty until the first client attaches
+    to stdin, and then remains open and accepts data until the client
+    disconnects, at which time stdin is closed and remains closed until the
+    container is restarted. If this flag is false, a container processes that
+    reads from stdin will never receive an EOF. Default is false
+
+  terminationMessagePath	<string>
+    Optional: Path at which the file to which the container's termination
+    message will be written is mounted into the container's filesystem. Message
+    written is intended to be brief final status, such as an assertion failure
+    message. Will be truncated by the node if greater than 4096 bytes. The total
+    message length across all containers will be limited to 12kb. Defaults to
+    /dev/termination-log. Cannot be updated.
+
+  terminationMessagePolicy	<string>
+  enum: FallbackToLogsOnError, File
+    Indicate how the termination message should be populated. File will use the
+    contents of terminationMessagePath to populate the container status message
+    on both success and failure. FallbackToLogsOnError will use the last chunk
+    of container log output if the termination message file is empty and the
+    container exited with an error. The log output is limited to 2048 bytes or
+    80 lines, whichever is smaller. Defaults to File. Cannot be updated.
+    
+    Possible enum values:
+     - `"FallbackToLogsOnError"` will read the most recent contents of the
+    container logs for the container status message when the container exits
+    with an error and the terminationMessagePath has no contents.
+     - `"File"` is the default behavior and will set the container status
+    message to the contents of the container's terminationMessagePath when the
+    container exits.
+
+  tty	<boolean>
+    Whether this container should allocate a TTY for itself, also requires
+    'stdin' to be true. Default is false.
+
+  volumeDevices	<[]VolumeDevice>
+    volumeDevices is the list of block devices to be used by the container.
+
+  volumeMounts	<[]VolumeMount>
+    Pod volumes to mount into the container's filesystem. Cannot be updated.
+
+  workingDir	<string>
+    Container's working directory. If not specified, the container runtime's
+    default will be used, which might be configured in the container image.
+    Cannot be updated.
+
+
++ kubectl -n hw-troubleshooting delete -f kubernetes-troubleshooting/broken/ --wait=true
+pod "configuration" deleted from hw-troubleshooting namespace
+pod "crash" deleted from hw-troubleshooting namespace
+pod "dns" deleted from hw-troubleshooting namespace
+pod "image" deleted from hw-troubleshooting namespace
+pod "pending" deleted from hw-troubleshooting namespace
+pod "volume" deleted from hw-troubleshooting namespace
++ kubectl apply -f kubernetes-troubleshooting/fixed/
+pod/configuration created
+pod/crash created
+pod/dns created
+pod/image created
+pod/pending created
+pod/volume created
++ kubectl -n hw-troubleshooting wait --for=condition=Ready pods --all --timeout=120s
+pod/configuration condition met
+pod/crash condition met
+pod/dns condition met
+pod/image condition met
+pod/pending condition met
+pod/volume condition met
++ kubectl -n hw-troubleshooting exec dns -- nslookup kubernetes.default.svc.cluster.local
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	kubernetes.default.svc.cluster.local
+Address: 10.96.0.1
+
++ kubectl -n hw-troubleshooting create deployment web --image=nginx:1.29-alpine --replicas=2
+deployment.apps/web created
++ kubectl -n hw-troubleshooting rollout status deployment/web --timeout=120s
+Waiting for deployment "web" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "web" rollout to finish: 1 of 2 updated replicas are available...
+deployment "web" successfully rolled out
++ kubectl -n hw-troubleshooting expose deployment web --port=80
+service/web exposed
++ kubectl -n hw-troubleshooting patch service web -p '{"spec":{"selector":{"app":"wrong"}}}'
+service/web patched
++ kubectl -n hw-troubleshooting get pods --show-labels
+NAME                   READY   STATUS    RESTARTS   AGE   LABELS
+configuration          1/1     Running   0          2s    <none>
+crash                  1/1     Running   0          2s    <none>
+dns                    1/1     Running   0          2s    <none>
+image                  1/1     Running   0          2s    <none>
+pending                1/1     Running   0          2s    <none>
+volume                 1/1     Running   0          2s    <none>
+web-5c7cbdcd5f-lg25n   1/1     Running   0          1s    app=web,pod-template-hash=5c7cbdcd5f
+web-5c7cbdcd5f-s6pbr   1/1     Running   0          1s    app=web,pod-template-hash=5c7cbdcd5f
++ kubectl -n hw-troubleshooting get endpointslices -l kubernetes.io/service-name=web
+NAME        ADDRESSTYPE   PORTS     ENDPOINTS   AGE
+web-7bhmc   IPv4          <unset>   <unset>     0s
++ kubectl -n hw-troubleshooting exec dns -- wget -T 3 -qO- http://web
+wget: can't connect to remote host (10.100.132.166): Connection refused
+command terminated with exit code 1
++ true
++ kubectl -n hw-troubleshooting patch service web -p '{"spec":{"selector":{"app":"web"}}}'
+service/web patched
++ kubectl -n hw-troubleshooting patch service web -p '{"spec":{"ports":[{"port":80,"targetPort":81}]}}'
+service/web patched
++ kubectl -n hw-troubleshooting get service web -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2026-10-07T14:34:47Z"
+  labels:
+    app: web
+  name: web
+  namespace: hw-troubleshooting
+  resourceVersion: "2552"
+  uid: 492b0673-3285-4552-87da-76d470a65917
+spec:
+  clusterIP: 10.100.132.166
+  clusterIPs:
+  - 10.100.132.166
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 81
+  selector:
+    app: web
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
++ kubectl -n hw-troubleshooting exec dns -- wget -T 3 -qO- http://web
+wget: can't connect to remote host (10.100.132.166): Connection refused
+command terminated with exit code 1
++ true
++ kubectl -n hw-troubleshooting patch service web -p '{"spec":{"ports":[{"port":80,"targetPort":80}]}}'
+service/web patched
++ sleep 3
++ kubectl -n hw-troubleshooting exec dns -- wget -T 3 -qO- http://web
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, nginx is successfully installed and working.
+Further configuration is required for the web server, reverse proxy, 
+API gateway, load balancer, content cache, or other features.</p>
+
+<p>For online documentation and support please refer to
+<a href="https://nginx.org/">nginx.org</a>.<br/>
+To engage with the community please visit
+<a href="https://community.nginx.org/">community.nginx.org</a>.<br/>
+For enterprise grade support, professional services, additional 
+security features and capabilities please refer to
+<a href="https://f5.com/nginx">f5.com/nginx</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
++ kubectl -n hw-troubleshooting get pods,svc -o wide
+NAME                       READY   STATUS    RESTARTS   AGE   IP            NODE              NOMINATED NODE   READINESS GATES
+pod/configuration          1/1     Running   0          7s    10.244.0.68   devops-homework   <none>           <none>
+pod/crash                  1/1     Running   0          7s    10.244.0.69   devops-homework   <none>           <none>
+pod/dns                    1/1     Running   0          7s    10.244.0.70   devops-homework   <none>           <none>
+pod/image                  1/1     Running   0          7s    10.244.0.71   devops-homework   <none>           <none>
+pod/pending                1/1     Running   0          7s    10.244.0.72   devops-homework   <none>           <none>
+pod/volume                 1/1     Running   0          7s    10.244.0.73   devops-homework   <none>           <none>
+pod/web-5c7cbdcd5f-lg25n   1/1     Running   0          6s    10.244.0.75   devops-homework   <none>           <none>
+pod/web-5c7cbdcd5f-s6pbr   1/1     Running   0          6s    10.244.0.74   devops-homework   <none>           <none>
+
+NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE   SELECTOR
+service/web   ClusterIP   10.100.132.166   <none>        80/TCP    5s    app=web
++ kubectl -n hw-troubleshooting top pods
+error: metrics not available yet
++ true
++ kubectl -n hw-troubleshooting top pods
+NAME                   CPU(cores)   MEMORY(bytes)   
+configuration          1m           0Mi             
+crash                  0m           0Mi             
+dns                    1m           0Mi             
+image                  1m           0Mi             
+pending                0m           0Mi             
+volume                 1m           0Mi             
+web-5c7cbdcd5f-lg25n   1m           8Mi             
+web-5c7cbdcd5f-s6pbr   1m           8Mi             
++ kubectl -n hw-troubleshooting get events --field-selector reason=BackOff
+LAST SEEN   TYPE      REASON    OBJECT      MESSAGE
+2m10s       Warning   BackOff   pod/crash   Back-off restarting failed container app in pod crash_hw-troubleshooting(52e081ac-80ed-49c8-95a7-3f538663728e)
+2m3s        Normal    BackOff   pod/image   Back-off pulling image "busybox:homework-nonexistent"
++ kubectl -n hw-troubleshooting get pods
+NAME                   READY   STATUS    RESTARTS   AGE
+configuration          1/1     Running   0          84s
+crash                  1/1     Running   0          84s
+dns                    1/1     Running   0          84s
+image                  1/1     Running   0          84s
+pending                1/1     Running   0          84s
+volume                 1/1     Running   0          84s
+web-5c7cbdcd5f-lg25n   1/1     Running   0          83s
+web-5c7cbdcd5f-s6pbr   1/1     Running   0          83s

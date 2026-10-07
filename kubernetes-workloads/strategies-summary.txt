@@ -1,0 +1,65 @@
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/bluegreen-blue    1/1     1            1           3m47s
+deployment.apps/bluegreen-green   1/1     1            1           3m47s
+deployment.apps/canary-preview    1/1     1            1           3m47s
+deployment.apps/canary-stable     3/3     3            3           3m47s
+deployment.apps/recreate          2/2     2            2           3m47s
+deployment.apps/rolling           2/2     2            2           3m47s
+
+NAME                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/bluegreen-blue-5dfd5567f6    1         1         1       3m47s
+replicaset.apps/bluegreen-green-6ffd9b6c88   1         1         1       3m47s
+replicaset.apps/canary-preview-b956f6f55     1         1         1       3m47s
+replicaset.apps/canary-stable-5bb8587d4c     3         3         3       3m47s
+replicaset.apps/recreate-6548599f4           0         0         0       3m47s
+replicaset.apps/recreate-9d7fccdc7           2         2         2       2m22s
+replicaset.apps/replicaset-demo              2         2         2       3m47s
+replicaset.apps/rolling-5f77799696           0         0         0       3m47s
+replicaset.apps/rolling-854774b99c           2         2         2       3m1s
+Waiting for deployment "rolling" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "rolling" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "rolling" rollout to finish: 1 old replicas are pending termination...
+rolling-v2
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-stable stable Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+canary-preview preview Dibyo Chakraborty 24BCS10302
+88s         Normal    ScalingReplicaSet   deployment/recreate                     Scaled up replica set recreate-6548599f4 from 0 to 2
+3s          Normal    ScalingReplicaSet   deployment/recreate                     Scaled up replica set recreate-9d7fccdc7 from 0 to 2
+3s          Normal    ScalingReplicaSet   deployment/recreate                     Scaled down replica set recreate-6548599f4 from 2 to 0

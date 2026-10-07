@@ -31,7 +31,7 @@ docker compose -f docker/compose.yaml down
 ## Kubernetes and Helm
 
 ```bash
-kind load docker-image devops-final:local --name devops-homework
+minikube -p devops-homework image load devops-final:local
 helm upgrade --install final-devops ./helm --namespace final-devops --create-namespace --wait
 kubectl port-forward -n final-devops svc/final-devops 8088:8080
 ```
@@ -48,13 +48,17 @@ The [root GitHub workflow](../.github/workflows/devops.yml) tests the applicatio
 
 ## Monitoring and GitOps
 
-`/metrics` exports `app_uptime_seconds`; Prometheus also generates `up` for scrape health. [Monitoring configuration](monitoring/) includes an application-down alert. Request logs are available with `kubectl logs -n final-devops deployment/final-devops`. CPU/memory metrics come from metrics-server (`kubectl top pods`), not the application uptime counter.
+`/metrics` exports `app_uptime_seconds`, `process_cpu_seconds_total`, and `process_peak_resident_memory_bytes`. The memory metric is peak process RSS; `kubectl top pods` gives current container CPU/memory from metrics-server. Prometheus generates `up` for scrape health. [Monitoring configuration](monitoring/) includes an application-down alert. Request logs are available with `kubectl logs -n final-devops deployment/final-devops`.
 
 The [Argo CD Application](gitops/application.yaml) reconciles this repository's Helm chart and restores drift with self-healing. The classroom configuration uses a locally loaded image; for a remote cluster commit a published GHCR SHA tag and configure pull access if the package is private. See the monitoring/GitOps assignment for the live reconciliation exercise.
 
 ## Troubleshooting and screenshots
 
-Runtime command logs, screenshots, and deliberately broken/fixed resource exercises are recorded alongside this project after execution. They are generated from this submission, not copied from the reference repository.
+[Final troubleshooting challenge](troubleshooting/README.md) deliberately introduces multiple issues, records diagnosis, repairs the resources, and verifies HTTP behavior in a separate namespace.
+
+![Running final application](screenshots/application.png)
+
+[Successful GitHub Actions run](https://github.com/dibyo10/devops-homework/actions/runs/37637960289) passed tests, security gates, registry publication, Kubernetes rollout, and HTTP checks. [Pipeline screenshots and output](../cicd-github-actions/README.md) and [live monitoring/GitOps evidence](../monitoring-gitops/README.md) document the remaining integrations.
 
 ## Lessons learned
 

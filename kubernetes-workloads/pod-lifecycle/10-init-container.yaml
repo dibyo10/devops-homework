@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lifecycle-init
+  namespace: hw-workloads
+spec:
+  initContainers:
+    - name: setup
+      image: busybox:1.36
+      command: ["sh", "-c", "sleep 5; echo initialized > /shared/message"]
+      volumeMounts:
+        - name: shared
+          mountPath: /shared
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "cat /shared/message; sleep 3600"]
+      volumeMounts:
+        - name: shared
+          mountPath: /shared
+  volumes:
+    - name: shared
+      emptyDir: {}

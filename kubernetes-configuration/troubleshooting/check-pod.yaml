@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-check
+  namespace: hw-configuration
+spec:
+  restartPolicy: Never
+  containers:
+    - name: check
+      image: busybox:1.36
+      env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: newline-demo
+              key: DB_PASSWORD
+      command: ["sh", "-c", "printf 'Length: %s\\n' \"${#DB_PASSWORD}\"; printf %s \"$DB_PASSWORD\" | od -c"]

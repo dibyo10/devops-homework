@@ -1,0 +1,27 @@
++ minikube -p devops-homework status
+devops-homework
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
++ kubectl get nodes
+NAME              STATUS   ROLES           AGE    VERSION
+devops-homework   Ready    control-plane   8m7s   v1.35.1
++ kubectl -n hw-basics get deployment,pods,svc
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hello   2/2     2            2           6m13s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/hello-65578b589c-gqds4   1/1     Running   0          5m19s
+pod/hello-65578b589c-t65xl   1/1     Running   0          5m20s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/hello   ClusterIP   10.108.72.76   <none>        80/TCP    6m
++ kubectl -n hw-basics rollout history deployment/hello
+deployment.apps/hello 
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+

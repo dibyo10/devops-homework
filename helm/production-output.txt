@@ -1,0 +1,120 @@
++ helm template notes-prod helm/notes-chart -f helm/notes-chart/values-prod.yaml
+---
+# Source: notes/templates/app.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notes-prod-page
+data:
+  index.html: "<h1>Notes application production</h1><p>production</p>"
+
+---
+# Source: notes/templates/app.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: notes-prod
+spec:
+  selector: {app: notes-prod}
+  ports: [{port: 80, targetPort: 80}]
+
+---
+# Source: notes/templates/app.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: notes-prod}
+  template:
+    metadata:
+      labels: {app: notes-prod}
+      annotations:
+        config: "a0c2318d82fcb3fd75399e763b8e2b0bd0b4f24fa675b870b419460b9bc1730b"
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.29-alpine
+          ports: [{containerPort: 80}]
+          readinessProbe:
+            httpGet: {path: /, port: 80}
+          resources:
+            requests: {cpu: 10m, memory: 16Mi}
+            limits: {cpu: 100m, memory: 64Mi}
+          volumeMounts: [{name: page, mountPath: /usr/share/nginx/html}]
+      volumes:
+        - name: page
+          configMap: {name: notes-prod-page}
++ helm upgrade notes helm/notes-chart -n hw-helm -f helm/notes-chart/values-prod.yaml --wait
+Release "notes" has been upgraded. Happy Helming!
+NAME: notes
+LAST DEPLOYED: Wed Oct  7 20:05:14 2026
+NAMESPACE: hw-helm
+STATUS: deployed
+REVISION: 8
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
++ kubectl -n hw-helm get deployment notes
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+notes   2/2     2            2           2m26s
++ kubectl -n hw-helm exec deployment/notes -- wget -qO- http://localhost
+<h1>Notes application production</h1><p>production</p>++ helm status notes -n hw-helm -o json
+++ python3 -c 'import json,sys; print(json.load(sys.stdin)["version"])'
++ revision=8
++ helm upgrade notes helm/notes-chart -n hw-helm -f helm/notes-chart/values-prod.yaml --set image=nginx:broken-tag-does-not-exist --wait --timeout 20s
+level=WARN msg="upgrade failed" name=notes error="resource Deployment/hw-helm/notes not ready. status: InProgress, message: Updated: 1/2\ncontext deadline exceeded"
+Error: UPGRADE FAILED: resource Deployment/hw-helm/notes not ready. status: InProgress, message: Updated: 1/2
+context deadline exceeded
++ helm status notes -n hw-helm
+NAME: notes
+LAST DEPLOYED: Wed Oct  7 20:05:14 2026
+NAMESPACE: hw-helm
+STATUS: failed
+REVISION: 9
+DESCRIPTION: Upgrade "notes" failed: resource Deployment/hw-helm/notes not ready. status: InProgress, message: Updated: 1/2
+context deadline exceeded
+RESOURCES:
+==> v1/ConfigMap
+NAME         DATA   AGE
+notes-page   1      2m46s
+
+==> v1/Service
+NAME    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+notes   ClusterIP   10.104.98.45   <none>        80/TCP    2m46s
+
+==> v1/Deployment
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+notes   2/2     1            2           2m46s
+
+==> v1/Pod(related)
+NAME                     READY   STATUS             RESTARTS   AGE
+notes-574645bdcd-q8qmf   1/1     Running            0          56s
+notes-574645bdcd-x4s5z   1/1     Running            0          55s
+notes-6765cbc64d-wq2vd   0/1     ImagePullBackOff   0          20s
+
+
+TEST SUITE: None
++ kubectl -n hw-helm get pods
+NAME                     READY   STATUS             RESTARTS   AGE
+notes-574645bdcd-q8qmf   1/1     Running            0          56s
+notes-574645bdcd-x4s5z   1/1     Running            0          55s
+notes-6765cbc64d-wq2vd   0/1     ImagePullBackOff   0          20s
++ helm rollback notes 8 -n hw-helm --wait
+Rollback was a success! Happy Helming!
++ helm history notes -n hw-helm
+REVISION	UPDATED                 	STATUS    	CHART      	APP VERSION	DESCRIPTION                                                                                                   
+1       	Wed Oct  7 20:02:48 2026	superseded	notes-0.1.0	1.0        	Install complete                                                                                              
+2       	Wed Oct  7 20:02:49 2026	superseded	notes-0.1.0	1.0        	Upgrade complete                                                                                              
+3       	Wed Oct  7 20:02:50 2026	superseded	notes-0.1.0	1.0        	Upgrade complete                                                                                              
+4       	Wed Oct  7 20:02:52 2026	superseded	notes-0.1.0	1.0        	Rollback to 1                                                                                                 
+5       	Wed Oct  7 20:04:38 2026	superseded	notes-0.1.0	1.0        	Upgrade complete                                                                                              
+6       	Wed Oct  7 20:04:40 2026	failed    	notes-0.1.0	1.0        	Upgrade "notes" failed: resource Deployment/hw-helm/notes not ready. status: InProgress, message: Updated: ...
+7       	Wed Oct  7 20:05:00 2026	superseded	notes-0.1.0	1.0        	Rollback to 5                                                                                                 
+8       	Wed Oct  7 20:05:14 2026	superseded	notes-0.1.0	1.0        	Upgrade complete                                                                                              
+9       	Wed Oct  7 20:05:14 2026	failed    	notes-0.1.0	1.0        	Upgrade "notes" failed: resource Deployment/hw-helm/notes not ready. status: InProgress, message: Updated: ...
+10      	Wed Oct  7 20:05:34 2026	deployed  	notes-0.1.0	1.0        	Rollback to 8                                                                                                 
++ kubectl -n hw-helm exec deployment/notes -- wget -qO- http://localhost
+<h1>Notes application production</h1><p>production</p>++ kubectl -n hw-helm get deployment notes -o 'jsonpath={.status.readyReplicas}'
++ test 2 = 2

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-demo
+  namespace: hw-workloads
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: replicaset-demo
+  template:
+    metadata:
+      labels:
+        app: replicaset-demo
+        family: replicaset
+        version: v1
+    spec:
+      containers:
+        - name: web
+          image: nginx:1.27-alpine
+          command: ["sh", "-c", "echo 'replicaset-demo v1 Dibyo Chakraborty 24BCS10302' > /usr/share/nginx/html/index.html; exec nginx -g 'daemon off;'"]
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 2

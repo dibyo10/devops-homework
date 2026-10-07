@@ -1,0 +1,118 @@
+namespace/hw-services unchanged
+statefulset.apps/web unchanged
+pod/client unchanged
+service/clusterip unchanged
+service/nodeport unchanged
+service/loadbalancer unchanged
+service/headless unchanged
+service/externalname unchanged
+partitioned roll out complete: 2 new pods have been updated...
+pod/client condition met
+NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP                               PORT(S)          AGE     SELECTOR
+service/clusterip      ClusterIP      10.108.196.204   <none>                                    80/TCP           2m34s   app=web
+service/externalname   ExternalName   <none>           clusterip.hw-services.svc.cluster.local   <none>           2m34s   <none>
+service/headless       ClusterIP      None             <none>                                    80/TCP           2m34s   app=web
+service/loadbalancer   LoadBalancer   10.97.82.240     127.0.0.1                                 8088:32131/TCP   2m34s   app=web
+service/nodeport       NodePort       10.102.167.46    <none>                                    80:32292/TCP     2m34s   app=web
+
+NAME                                                ADDRESSTYPE   PORTS   ENDPOINTS                 AGE
+endpointslice.discovery.k8s.io/clusterip-gqrnz      IPv4          80      10.244.0.26,10.244.0.51   2m34s
+endpointslice.discovery.k8s.io/headless-h6rj2       IPv4          80      10.244.0.26,10.244.0.51   2m34s
+endpointslice.discovery.k8s.io/loadbalancer-295c7   IPv4          80      10.244.0.26,10.244.0.51   2m34s
+endpointslice.discovery.k8s.io/nodeport-fg82c       IPv4          80      10.244.0.26,10.244.0.51   2m34s
+
+NAME         READY   STATUS    RESTARTS   AGE     IP            NODE              NOMINATED NODE   READINESS GATES
+pod/client   1/1     Running   0          2m34s   10.244.0.25   devops-homework   <none>           <none>
+pod/web-0    1/1     Running   0          2m34s   10.244.0.26   devops-homework   <none>           <none>
+pod/web-1    1/1     Running   0          105s    10.244.0.51   devops-homework   <none>           <none>
+Dibyo Chakraborty 24BCS10302
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	clusterip.hw-services.svc.cluster.local
+Address: 10.108.196.204
+
+Dibyo Chakraborty 24BCS10302
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	nodeport.hw-services.svc.cluster.local
+Address: 10.102.167.46
+
+Dibyo Chakraborty 24BCS10302
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	loadbalancer.hw-services.svc.cluster.local
+Address: 10.97.82.240
+
+Dibyo Chakraborty 24BCS10302
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+Name:	headless.hw-services.svc.cluster.local
+Address: 10.244.0.26
+Name:	headless.hw-services.svc.cluster.local
+Address: 10.244.0.51
+
+
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+externalname.hw-services.svc.cluster.local	canonical name = clusterip.hw-services.svc.cluster.local
+Name:	clusterip.hw-services.svc.cluster.local
+Address: 10.108.196.204
+
+Dibyo Chakraborty 24BCS10302
+Server:		10.96.0.10
+Address:	10.96.0.10:53
+
+
+Name:	web-0.headless.hw-services.svc.cluster.local
+Address: 10.244.0.26
+
+search hw-services.svc.cluster.local svc.cluster.local cluster.local
+nameserver 10.96.0.10
+options ndots:5
+apiVersion: v1
+data:
+  Corefile: |
+    .:53 {
+        log
+        errors
+        health {
+           lameduck 5s
+        }
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+           pods insecure
+           fallthrough in-addr.arpa ip6.arpa
+           ttl 30
+        }
+        prometheus :9153
+        hosts {
+           192.168.65.254 host.minikube.internal
+           fallthrough
+        }
+        forward . /etc/resolv.conf {
+           max_concurrent 1000
+        }
+        cache 30 {
+           disable success cluster.local
+           disable denial cluster.local
+        }
+        loop
+        reload
+        loadbalance
+    }
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2026-10-07T14:30:13Z"
+  name: coredns
+  namespace: kube-system
+  resourceVersion: "307"
+  uid: 21e083f5-90a3-4d56-b4e2-a0c3a54c219e
