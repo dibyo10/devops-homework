@@ -1,0 +1,40 @@
+Run: https://github.com/dibyo10/devops-homework/actions/runs/37637960289
+Commit: 934e182778f559eb3bc56c312e261b5ad19754c5
+Status: completed
+Conclusion: success
+
+Job: test-and-security - success
+  Set up job: success
+  Run actions/checkout@v4: success
+  Run actions/setup-python@v5: success
+  Test application: success
+  Install security tools: success
+  SAST and SCA: success
+  Scan committed secrets: success
+  Build image: success
+  Scan container image: success
+  Save tested image: success
+  Run actions/upload-artifact@v4: success
+  Run actions/upload-artifact@v4: success
+  Post Scan container image: success
+  Post Scan committed secrets: success
+  Post Run actions/setup-python@v5: success
+  Post Run actions/checkout@v4: success
+  Complete job: success
+
+Job: publish-and-deploy - success
+  Set up job: success
+  Run actions/checkout@v4: success
+  Run actions/download-artifact@v4: success
+  Run docker/login-action@v3: success
+  Publish tested image: success
+  Run helm/kind-action@v1: success
+  Run azure/setup-helm@v4.3.0: success
+  Deploy published image with Helm: success
+  Verify running application: success
+  Collect deployment logs: success
+  Run actions/upload-artifact@v4: success
+  Post Run helm/kind-action@v1: success
+  Post Run docker/login-action@v3: success
+  Post Run actions/checkout@v4: success
+  Complete job: success

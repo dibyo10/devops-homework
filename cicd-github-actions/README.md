@@ -14,4 +14,10 @@ gh workflow run devops.yml
 gh run list --workflow devops.yml
 ```
 
-Actual run links and screenshots are added after the workflow executes.
+## Executed pipeline
+
+[Run 37637960289](https://github.com/dibyo10/devops-homework/actions/runs/37637960289) passed both jobs: tests/security and publication/deployment. The tested image was published and pulled as `ghcr.io/dibyo10/devops-homework:934e182778f559eb3bc56c312e261b5ad19754c5`, then deployed with Helm into kind. Rollout and HTTP health/metrics checks passed.
+
+The [command transcript](workflow-run.txt) records the actual job and step results; this screenshot renders that transcript.
+
+![Successful GitHub Actions pipeline](screenshots/workflow-success.png)

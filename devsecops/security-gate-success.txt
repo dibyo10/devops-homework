@@ -1,0 +1,16 @@
+Run: https://github.com/dibyo10/devops-homework/actions/runs/37637960289
+Image threshold: fixable HIGH and CRITICAL vulnerabilities
+{
+  "image": "devops-final:934e182778f559eb3bc56c312e261b5ad19754c5",
+  "findings_at_configured_threshold": []
+}
+{
+  "sast_findings": []
+}
+{
+  "dependencies": [],
+  "fixes": []
+}
+{
+  "secret_findings": []
+}

@@ -1,0 +1,31 @@
+{"conclusion":"failure","headSha":"8844b5084c19439520fb3787f276875702b1d2af","jobs":[{"conclusion":"failure","name":"test-and-security","steps":[{"conclusion":"success","name":"Set up job"},{"conclusion":"success","name":"Run actions/checkout@v4"},{"conclusion":"success","name":"Run actions/setup-python@v5"},{"conclusion":"success","name":"Test application"},{"conclusion":"success","name":"Install security tools"},{"conclusion":"success","name":"SAST and SCA"},{"conclusion":"success","name":"Scan committed secrets"},{"conclusion":"success","name":"Build image"},{"conclusion":"failure","name":"Scan container image"},{"conclusion":"skipped","name":"Save tested image"},{"conclusion":"skipped","name":"Run actions/upload-artifact@v4"},{"conclusion":"success","name":"Run actions/upload-artifact@v4"},{"conclusion":"success","name":"Post Scan container image"},{"conclusion":"success","name":"Post Scan committed secrets"},{"conclusion":"skipped","name":"Post Run actions/setup-python@v5"},{"conclusion":"success","name":"Post Run actions/checkout@v4"},{"conclusion":"success","name":"Complete job"}]},{"conclusion":"skipped","name":"publish-and-deploy","steps":[]}],"url":"https://github.com/dibyo10/devops-homework/actions/runs/37637687420"}
+[
+  {
+    "VulnerabilityID": "GHSA-6v7p-g79w-8964",
+    "PkgName": "msgpack",
+    "InstalledVersion": "1.1.2",
+    "FixedVersion": "1.2.1",
+    "Severity": "HIGH"
+  },
+  {
+    "VulnerabilityID": "CVE-2025-47273",
+    "PkgName": "setuptools",
+    "InstalledVersion": "70.3.0",
+    "FixedVersion": "78.1.1",
+    "Severity": "HIGH"
+  },
+  {
+    "VulnerabilityID": "CVE-2026-97687",
+    "PkgName": "urllib3",
+    "InstalledVersion": "2.7.0",
+    "FixedVersion": "2.8.0",
+    "Severity": "HIGH"
+  },
+  {
+    "VulnerabilityID": "CVE-2026-97689",
+    "PkgName": "urllib3",
+    "InstalledVersion": "2.7.0",
+    "FixedVersion": "2.8.0",
+    "Severity": "HIGH"
+  }
+]
