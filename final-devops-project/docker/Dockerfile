@@ -1,4 +1,5 @@
 FROM python:3.13-slim
+RUN python -m pip uninstall -y pip && rm -rf /usr/local/lib/python3.13/ensurepip
 WORKDIR /app
 COPY application/app.py .
 USER 10001:10001

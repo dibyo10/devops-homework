@@ -1,5 +1,7 @@
 import json
 import os
+import resource
+import sys
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -9,7 +11,13 @@ STARTED = time.monotonic()
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/metrics":
-            body = f"# TYPE app_uptime_seconds gauge\napp_uptime_seconds {time.monotonic() - STARTED:.3f}\n"
+            usage = resource.getrusage(resource.RUSAGE_SELF)
+            peak_bytes = usage.ru_maxrss * (1 if sys.platform == "darwin" else 1024)
+            body = (
+                f"# TYPE app_uptime_seconds gauge\napp_uptime_seconds {time.monotonic() - STARTED:.3f}\n"
+                f"# TYPE process_cpu_seconds_total counter\nprocess_cpu_seconds_total {usage.ru_utime + usage.ru_stime:.6f}\n"
+                f"# TYPE process_peak_resident_memory_bytes gauge\nprocess_peak_resident_memory_bytes {peak_bytes}\n"
+            )
             content_type = "text/plain; version=0.0.4"
         elif self.path in ("/", "/health", "/ready"):
             body = json.dumps({"status": "ok", "student": "Dibyo Chakraborty", "enrollment": "24BCS10302", "message": os.getenv("APP_MESSAGE", "DevOps final project")})

@@ -19,7 +19,10 @@ class AppTest(unittest.TestCase):
                 with urllib.request.urlopen(base + path, timeout=3) as response:
                     self.assertEqual(json.load(response)["enrollment"], "24BCS10302")
             with urllib.request.urlopen(base + "/metrics", timeout=3) as response:
-                self.assertIn(b"app_uptime_seconds", response.read())
+                metrics = response.read().decode()
+                for name in ("app_uptime_seconds", "process_cpu_seconds_total", "process_peak_resident_memory_bytes"):
+                    value = next(line.split()[1] for line in metrics.splitlines() if line.startswith(name + " "))
+                    self.assertGreaterEqual(float(value), 0)
             with self.assertRaises(urllib.error.HTTPError) as error:
                 urllib.request.urlopen(base + "/missing", timeout=3)
             self.assertEqual(error.exception.code, 404)
