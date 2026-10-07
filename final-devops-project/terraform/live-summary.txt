@@ -1,0 +1,28 @@
+Plan: 9 to add, 0 to change, 0 to destroy.
+module.application.aws_vpc.homework: Creation complete after 3s [id=vpc-07eafda8931af18e5]
+module.application.aws_s3_bucket.artifacts: Creation complete after 3s [id=dibyo-24bcs10302-1061c664ff1ca3008a97da6f8b]
+module.application.aws_internet_gateway.homework: Creation complete after 1s [id=igw-01dcacb24c51c740d]
+module.application.aws_s3_bucket_public_access_block.artifacts: Creation complete after 1s [id=dibyo-24bcs10302-1061c664ff1ca3008a97da6f8b]
+module.application.aws_route_table.public: Creation complete after 1s [id=rtb-0bc1a5bfb351a74f2]
+module.application.aws_security_group.web: Creation complete after 3s [id=sg-016003299544122ea]
+module.application.aws_subnet.public: Creation complete after 11s [id=subnet-003ed2a675f2cc61a]
+module.application.aws_route_table_association.public: Creation complete after 1s [id=rtbassoc-085edb30158e5e0c7]
+module.application.aws_instance.web: Creation complete after 13s [id=i-015ff3ffe89acfb48]
+Apply complete! Resources: 9 added, 0 changed, 0 destroyed.
+Outputs:
+bucket_name = "dibyo-24bcs10302-1061c664ff1ca3008a97da6f8b"
+web_url = "http://3.6.43.228"
+Outputs:
+bucket_name = "dibyo-24bcs10302-1061c664ff1ca3008a97da6f8b"
+web_url = "http://3.6.43.228"
+Plan: 0 to add, 0 to change, 9 to destroy.
+module.application.aws_s3_bucket_public_access_block.artifacts: Destruction complete after 0s
+module.application.aws_s3_bucket.artifacts: Destruction complete after 1s
+module.application.aws_instance.web: Destruction complete after 30s
+module.application.aws_route_table_association.public: Destruction complete after 0s
+module.application.aws_security_group.web: Destruction complete after 1s
+module.application.aws_subnet.public: Destruction complete after 1s
+module.application.aws_route_table.public: Destruction complete after 1s
+module.application.aws_internet_gateway.homework: Destruction complete after 0s
+module.application.aws_vpc.homework: Destruction complete after 1s
+Destroy complete! Resources: 9 destroyed.

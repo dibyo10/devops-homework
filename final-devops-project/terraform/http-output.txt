@@ -1,0 +1,11 @@
+URLError
+URLError
+URLError
+URLError
+URLError
+URLError
+URLError
+URLError
+URLError
+HTTP 200 http://3.6.43.228/health
+{"status": "ok", "student": "Dibyo Chakraborty", "enrollment": "24BCS10302", "message": "DevOps final project"}

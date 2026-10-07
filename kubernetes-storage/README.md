@@ -39,4 +39,8 @@ The read returned persisted-24BCS10302 after replacement. [Full recorded command
 
 ![Storage persistence and HPA output](screenshots/storage-hpa.png)
 
+After removing the load generator, CPU returned to 1% and the HPA reduced five replicas back to one. [Scale-down output](scale-down-output.txt).
+
+![Scale-down after load removal](screenshots/scale-down.png)
+
 Source: [HPA walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/).

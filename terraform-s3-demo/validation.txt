@@ -1,0 +1,25 @@
+Dibyo Chakraborty | 24BCS10302
+Validation date: 2026-10-07
+Terraform v1.15.8 / darwin_arm64; hashicorp/aws v6.67.0
+
+$ terraform init -backend=false -input=false -no-color
+Terraform has been successfully initialized!
+$ terraform fmt -check -recursive
+Exit 0; no formatting differences.
+$ terraform validate -no-color
+Success! The configuration is valid.
+$ terraform test -no-color
+run "private_bucket"... pass
+run "reject_invalid_bucket"... pass
+Success! 2 passed, 0 failed.
+
+These are mocked-provider plan tests, not an AWS deployment.
+$ aws sts get-caller-identity --profile lemnisca-dev
+aws: [ERROR]: Your session has expired. Please reauthenticate using 'aws login'.
+The initial login failure above was resolved by user reauthentication.
+Live AWS verification subsequently succeeded on 2026-10-07:
+plan/apply: 2 resources created.
+terraform show, state list and outputs: inspected successfully.
+aws s3api head-bucket: succeeded for dibyo-24bcs10302-homework-20261007.
+terraform destroy: 2 resources destroyed.
+See live-output.txt for the actual Terraform transcript.

@@ -41,3 +41,9 @@ Submission for the DevOps homework, including the October Kubernetes, Helm, CI/C
 Every application has its own Dockerfile. Runtime evidence and exact commands are kept with each topic so the work is reproducible.
 
 The supplied friend's `Class_Assignments/` was used to identify exercise scope and presentation style. New manifests, explanations, runtime output, and screenshots belong to this submission. Screenshots are inside each project's `screenshots/` folder. Command screenshots are Playwright renderings of the accompanying recorded transcripts, labelled as such; browser screenshots capture live application pages.
+
+## October execution
+
+Kubernetes exercises ran on the dedicated `devops-homework` Minikube profile. HPA scaled from one to five Pods under load and back to one after load removal. Helm upgrades and rollback, deliberate fault repair, Prometheus alert firing/recovery, and Argo CD drift correction were exercised. The GitHub workflow builds, scans, publishes to GHCR, and deploys the image into a temporary Kubernetes cluster. AWS execution records and cleanup results are linked from each Terraform project.
+
+To revisit the local cluster after it has been stopped: `minikube start -p devops-homework`. Screenshots and transcripts remain available without running the labs.

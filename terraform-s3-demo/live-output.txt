@@ -1,0 +1,244 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.homework will be created
+  + resource "aws_s3_bucket" "homework" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "dibyo-24bcs10302-homework-20261007"
+      + bucket_domain_name          = (known after apply)
+      + bucket_namespace            = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_region               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = "ap-south-1"
+      + request_payer               = (known after apply)
+      + tags_all                    = {
+          + "Enrollment" = "24BCS10302"
+          + "Owner"      = "Dibyo Chakraborty"
+          + "Project"    = "devops-homework"
+          + "Session"    = "18"
+        }
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+
+      + cors_rule (known after apply)
+
+      + grant (known after apply)
+
+      + lifecycle_rule (known after apply)
+
+      + logging (known after apply)
+
+      + object_lock_configuration (known after apply)
+
+      + replication_configuration (known after apply)
+
+      + server_side_encryption_configuration (known after apply)
+
+      + versioning (known after apply)
+
+      + website (known after apply)
+    }
+
+  # aws_s3_bucket_public_access_block.homework will be created
+  + resource "aws_s3_bucket_public_access_block" "homework" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = (known after apply)
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + region                  = "ap-south-1"
+      + restrict_public_buckets = true
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket_arn    = (known after apply)
+  + bucket_name   = "dibyo-24bcs10302-homework-20261007"
+  + bucket_region = "ap-south-1"
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: lab.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "lab.tfplan"
+aws_s3_bucket.homework: Creating...
+aws_s3_bucket.homework: Creation complete after 7s [id=dibyo-24bcs10302-homework-20261007]
+aws_s3_bucket_public_access_block.homework: Creating...
+aws_s3_bucket_public_access_block.homework: Creation complete after 1s [id=dibyo-24bcs10302-homework-20261007]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+bucket_arn = "arn:aws:s3:::dibyo-24bcs10302-homework-20261007"
+bucket_name = "dibyo-24bcs10302-homework-20261007"
+bucket_region = "ap-south-1"
+# aws_s3_bucket.homework:
+resource "aws_s3_bucket" "homework" {
+    acceleration_status         = null
+    arn                         = "arn:aws:s3:::dibyo-24bcs10302-homework-20261007"
+    bucket                      = "dibyo-24bcs10302-homework-20261007"
+    bucket_domain_name          = "dibyo-24bcs10302-homework-20261007.s3.amazonaws.com"
+    bucket_namespace            = "global"
+    bucket_prefix               = null
+    bucket_region               = "ap-south-1"
+    bucket_regional_domain_name = "dibyo-24bcs10302-homework-20261007.s3.ap-south-1.amazonaws.com"
+    force_destroy               = false
+    hosted_zone_id              = "Z11RGJOFQNVJUP"
+    id                          = "dibyo-24bcs10302-homework-20261007"
+    object_lock_enabled         = false
+    policy                      = null
+    region                      = "ap-south-1"
+    request_payer               = "BucketOwner"
+    tags_all                    = {
+        "Enrollment" = "24BCS10302"
+        "Owner"      = "Dibyo Chakraborty"
+        "Project"    = "devops-homework"
+        "Session"    = "18"
+    }
+
+    grant {
+        id          = "47e2bea7df6401300aa21c77b87ac6d7948cc54d75cdddc9246d0df5f6e5987f"
+        permissions = [
+            "FULL_CONTROL",
+        ]
+        type        = "CanonicalUser"
+        uri         = null
+    }
+
+    server_side_encryption_configuration {
+        rule {
+            bucket_key_enabled = false
+
+            apply_server_side_encryption_by_default {
+                kms_master_key_id = null
+                sse_algorithm     = "AES256"
+            }
+        }
+    }
+
+    versioning {
+        enabled    = false
+        mfa_delete = false
+    }
+}
+
+# aws_s3_bucket_public_access_block.homework:
+resource "aws_s3_bucket_public_access_block" "homework" {
+    block_public_acls       = true
+    block_public_policy     = true
+    bucket                  = "dibyo-24bcs10302-homework-20261007"
+    id                      = "dibyo-24bcs10302-homework-20261007"
+    ignore_public_acls      = true
+    region                  = "ap-south-1"
+    restrict_public_buckets = true
+}
+
+
+Outputs:
+
+bucket_arn = "arn:aws:s3:::dibyo-24bcs10302-homework-20261007"
+bucket_name = "dibyo-24bcs10302-homework-20261007"
+bucket_region = "ap-south-1"
+aws_s3_bucket.homework
+aws_s3_bucket_public_access_block.homework
+{
+    "BucketArn": "arn:aws:s3:::dibyo-24bcs10302-homework-20261007",
+    "BucketRegion": "ap-south-1",
+    "AccessPointAlias": false
+}
+aws_s3_bucket.homework: Refreshing state... [id=dibyo-24bcs10302-homework-20261007]
+aws_s3_bucket_public_access_block.homework: Refreshing state... [id=dibyo-24bcs10302-homework-20261007]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_s3_bucket.homework will be destroyed
+  - resource "aws_s3_bucket" "homework" {
+      - arn                         = "arn:aws:s3:::dibyo-24bcs10302-homework-20261007" -> null
+      - bucket                      = "dibyo-24bcs10302-homework-20261007" -> null
+      - bucket_domain_name          = "dibyo-24bcs10302-homework-20261007.s3.amazonaws.com" -> null
+      - bucket_namespace            = "global" -> null
+      - bucket_region               = "ap-south-1" -> null
+      - bucket_regional_domain_name = "dibyo-24bcs10302-homework-20261007.s3.ap-south-1.amazonaws.com" -> null
+      - force_destroy               = false -> null
+      - hosted_zone_id              = "Z11RGJOFQNVJUP" -> null
+      - id                          = "dibyo-24bcs10302-homework-20261007" -> null
+      - object_lock_enabled         = false -> null
+      - region                      = "ap-south-1" -> null
+      - request_payer               = "BucketOwner" -> null
+      - tags                        = {} -> null
+      - tags_all                    = {
+          - "Enrollment" = "24BCS10302"
+          - "Owner"      = "Dibyo Chakraborty"
+          - "Project"    = "devops-homework"
+          - "Session"    = "18"
+        } -> null
+        # (3 unchanged attributes hidden)
+
+      - grant {
+          - id          = "47e2bea7df6401300aa21c77b87ac6d7948cc54d75cdddc9246d0df5f6e5987f" -> null
+          - permissions = [
+              - "FULL_CONTROL",
+            ] -> null
+          - type        = "CanonicalUser" -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - server_side_encryption_configuration {
+          - rule {
+              - bucket_key_enabled = false -> null
+
+              - apply_server_side_encryption_by_default {
+                  - sse_algorithm     = "AES256" -> null
+                    # (1 unchanged attribute hidden)
+                }
+            }
+        }
+
+      - versioning {
+          - enabled    = false -> null
+          - mfa_delete = false -> null
+        }
+    }
+
+  # aws_s3_bucket_public_access_block.homework will be destroyed
+  - resource "aws_s3_bucket_public_access_block" "homework" {
+      - block_public_acls       = true -> null
+      - block_public_policy     = true -> null
+      - bucket                  = "dibyo-24bcs10302-homework-20261007" -> null
+      - id                      = "dibyo-24bcs10302-homework-20261007" -> null
+      - ignore_public_acls      = true -> null
+      - region                  = "ap-south-1" -> null
+      - restrict_public_buckets = true -> null
+    }
+
+Plan: 0 to add, 0 to change, 2 to destroy.
+
+Changes to Outputs:
+  - bucket_arn    = "arn:aws:s3:::dibyo-24bcs10302-homework-20261007" -> null
+  - bucket_name   = "dibyo-24bcs10302-homework-20261007" -> null
+  - bucket_region = "ap-south-1" -> null
+aws_s3_bucket_public_access_block.homework: Destroying... [id=dibyo-24bcs10302-homework-20261007]
+aws_s3_bucket_public_access_block.homework: Destruction complete after 0s
+aws_s3_bucket.homework: Destroying... [id=dibyo-24bcs10302-homework-20261007]
+aws_s3_bucket.homework: Destruction complete after 1s
+
+Destroy complete! Resources: 2 destroyed.

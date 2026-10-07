@@ -1,0 +1,36 @@
+Plan: 9 to add, 0 to change, 0 to destroy.
+aws_vpc.homework: Creation complete after 2s [id=vpc-06c7ef5511fbe69a9]
+aws_internet_gateway.homework: Creation complete after 1s [id=igw-015128c1f0062110c]
+aws_route_table.public: Creation complete after 2s [id=rtb-0bc9f09a283af47db]
+aws_security_group.web: Creation complete after 3s [id=sg-001ed798eaced2474]
+aws_s3_bucket.artifacts: Creation complete after 8s [id=dibyo-24bcs10302-8db7f52d365b0dc1bcef85f2be]
+aws_s3_bucket_public_access_block.artifacts: Creation complete after 1s [id=dibyo-24bcs10302-8db7f52d365b0dc1bcef85f2be]
+aws_subnet.public: Creation complete after 12s [id=subnet-013843b12cfd011c9]
+aws_route_table_association.public: Creation complete after 0s [id=rtbassoc-0b05153d9919b4158]
+aws_instance.web: Creation complete after 13s [id=i-0105107bb1c026550]
+Apply complete! Resources: 9 added, 0 changed, 0 destroyed.
+Outputs:
+bucket_name = "dibyo-24bcs10302-8db7f52d365b0dc1bcef85f2be"
+instance_id = "i-0105107bb1c026550"
+security_group_id = "sg-001ed798eaced2474"
+subnet_id = "subnet-013843b12cfd011c9"
+vpc_id = "vpc-06c7ef5511fbe69a9"
+web_url = "http://3.108.56.68"
+Outputs:
+bucket_name = "dibyo-24bcs10302-8db7f52d365b0dc1bcef85f2be"
+instance_id = "i-0105107bb1c026550"
+security_group_id = "sg-001ed798eaced2474"
+subnet_id = "subnet-013843b12cfd011c9"
+vpc_id = "vpc-06c7ef5511fbe69a9"
+web_url = "http://3.108.56.68"
+Plan: 0 to add, 0 to change, 9 to destroy.
+aws_s3_bucket_public_access_block.artifacts: Destruction complete after 1s
+aws_s3_bucket.artifacts: Destruction complete after 0s
+aws_instance.web: Destruction complete after 30s
+aws_route_table_association.public: Destruction complete after 1s
+aws_security_group.web: Destruction complete after 1s
+aws_subnet.public: Destruction complete after 1s
+aws_route_table.public: Destruction complete after 1s
+aws_internet_gateway.homework: Destruction complete after 0s
+aws_vpc.homework: Destruction complete after 1s
+Destroy complete! Resources: 9 destroyed.

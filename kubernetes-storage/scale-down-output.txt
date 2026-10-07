@@ -1,0 +1,13 @@
++ kubectl -n hw-storage get hpa
+NAME       REFERENCE             TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+hpa-demo   Deployment/hpa-demo   cpu: 1%/50%   1         5         1          13m
+web        Deployment/web        cpu: 1%/50%   1         3         1          13m
++ kubectl -n hw-storage get pods
+NAME                        READY   STATUS    RESTARTS   AGE
+hpa-demo-84bdd55975-lc4sp   1/1     Running   0          13m
+temporary-volumes           1/1     Running   0          13m
+web-669dd685b5-l962m        1/1     Running   0          11m
++ kubectl -n hw-storage get events --field-selector reason=SuccessfulRescale
+LAST SEEN   TYPE     REASON              OBJECT                             MESSAGE
+9m48s       Normal   SuccessfulRescale   horizontalpodautoscaler/hpa-demo   New size: 5; reason: cpu resource utilization (percentage of request) above target
+5m33s       Normal   SuccessfulRescale   horizontalpodautoscaler/hpa-demo   New size: 1; reason: All metrics below target

@@ -1,0 +1,28 @@
+Dibyo Chakraborty | 24BCS10302
+Validation date: 2026-10-07
+Terraform v1.15.8 / darwin_arm64; hashicorp/aws v6.67.0
+
+$ terraform init -backend=false -input=false -no-color
+Terraform has been successfully initialized!
+$ terraform fmt -check -recursive
+Exit 0; no formatting differences.
+$ terraform validate -no-color
+Success! The configuration is valid.
+$ terraform test -no-color
+run "public_network"... pass
+run "reject_shell_in_image"... pass
+run "reject_invalid_port"... pass
+Success! 3 passed, 0 failed.
+
+Tests check subnet, web ingress, default route, IMDSv2, encrypted root volume,
+S3 public-access protection, and reject shell metacharacters/invalid ports.
+They use a mocked provider; no AWS resources are created.
+
+$ aws sts get-caller-identity --profile lemnisca-dev
+aws: [ERROR]: Your session has expired. Please reauthenticate using 'aws login'.
+The initial login failure above was resolved by user reauthentication.
+Live plan/apply: 9 resources created on 2026-10-07.
+State and outputs inspected; S3 head-bucket succeeded.
+EC2 nginx returned HTTP 200; browser screenshot saved.
+Destroy complete! Resources: 9 destroyed.
+See live-output.txt and http-output.txt for actual execution and cleanup.
